@@ -67,14 +67,13 @@ const OW = '#F8F8F8';
 const GY = '#999999';
 const GL = '#D4D4D4';
 const BD = '#E5E5E5';
+const BL = '#076CC7';
+const BLD = '#0558A3';
 const F = "'Inter',system-ui,sans-serif";
 
 function logo(color=BK, yc=GY) {
-  return `<div style="font-family:${F};font-weight:800;font-size:22px;color:${color};letter-spacing:-1px;display:flex;align-items:center;gap:1px;">
-    side<span style="color:${yc};">x</span>side
-  </div>`;
+  return `<div style="font-family:${F};font-weight:800;font-size:22px;color:${color};letter-spacing:-1px;display:flex;align-items:center;gap:1px;">side<span style="color:${yc};">x</span>side</div>`;
 }
-
 function logoBar(pos='bottom', color=BK, yc=GY) {
   const p = pos==='top' ? 'top:0' : 'bottom:0';
   return `<div style="position:absolute;${p};left:0;right:0;display:flex;justify-content:space-between;align-items:center;padding:36px 48px;z-index:10;">
@@ -82,27 +81,30 @@ function logoBar(pos='bottom', color=BK, yc=GY) {
     <div style="font-family:${F};font-weight:600;font-size:15px;color:${color};letter-spacing:-0.01em;opacity:0.5;">sidexside.ai</div>
   </div>`;
 }
-
 function pill(text, bg=BK, fg=WH) {
   return `<div style="display:inline-block;background:${bg};color:${fg};font-family:${F};font-weight:700;font-size:18px;padding:16px 36px;border-radius:100px;letter-spacing:-0.02em;">${text}</div>`;
 }
-
-function highlight(text) {
+function hl(text) {
   return `<span style="background:${Y};padding:0 8px;border-radius:6px;display:inline;color:${BK};">${text}</span>`;
 }
+function hlBlue(text) {
+  return `<span style="background:${BL};padding:2px 10px;border-radius:6px;display:inline;color:${WH};">${text}</span>`;
+}
 
-// ── POST 01: The Last Few Blocks (White bg, clean) ──
+// ═══════════════════════════════════════
+// PORTRAIT POSTS (1080×1350)
+// ═══════════════════════════════════════
+
+// ── 01: The Last Few Blocks (White + yellow) ──
 function post01() {
   return `<div data-export-name="post-01-last-few-blocks" style="width:1080px;height:1350px;background:${WH};position:relative;overflow:hidden;font-family:${F};">
     ${logoBar('top')}
-    <!-- Yellow accent shape -->
-    <div style="position:absolute;top:-80px;right:-120px;width:500px;height:500px;border-radius:50%;background:${Y};opacity:0.4;z-index:1;"></div>
-    <div style="position:absolute;bottom:-60px;left:-80px;width:350px;height:350px;border-radius:50%;background:${Y};opacity:0.25;z-index:1;"></div>
-    <!-- Content -->
+    <div style="position:absolute;top:-80px;right:-120px;width:500px;height:500px;border-radius:50%;background:${Y};opacity:0.35;z-index:1;"></div>
+    <div style="position:absolute;bottom:-60px;left:-80px;width:350px;height:350px;border-radius:50%;background:${BL};opacity:0.08;z-index:1;"></div>
     <div style="position:absolute;top:0;left:0;right:0;bottom:0;display:flex;flex-direction:column;justify-content:center;padding:140px 64px;z-index:5;">
-      <div style="font-weight:600;font-size:15px;color:${GY};margin-bottom:24px;letter-spacing:0.06em;text-transform:uppercase;">You know the feeling</div>
+      <div style="font-weight:600;font-size:15px;color:${BL};margin-bottom:24px;letter-spacing:0.06em;text-transform:uppercase;">You know the feeling</div>
       <h1 style="font-weight:800;font-size:82px;line-height:0.95;letter-spacing:-0.04em;color:${BK};margin:0;">
-        The last<br>few blocks<br>${highlight("don't have to")}<br>be the longest.
+        The last<br>few blocks<br>${hl("don't have to")}<br>be the longest.
       </h1>
       <p style="font-weight:400;font-size:24px;color:#666;margin-top:28px;line-height:1.5;max-width:600px;">Someone's already going your way — right now.</p>
       <div style="margin-top:40px;">${pill('Walk together with sidexside')}</div>
@@ -111,7 +113,7 @@ function post01() {
   </div>`;
 }
 
-// ── POST 02: Things We Don't Save (Black bg, contrast) ──
+// ── 02: Things We Don't Save (Black bg) ──
 function post02() {
   function badge(label, emoji, pos) {
     return `<div style="position:absolute;${pos};background:${WH};border-radius:100px;padding:14px 24px;display:flex;align-items:center;gap:10px;box-shadow:0 8px 24px rgba(0,0,0,0.15);z-index:8;">
@@ -146,7 +148,7 @@ function post02() {
   </div>`;
 }
 
-// ── POST 03: Library Closes Late (Off-white bg, clean timeline) ──
+// ── 03: Library Closes Late (Off-white, timeline) ──
 function post03() {
   function step(emoji, title, subtitle, showLine=true) {
     return `<div style="display:flex;gap:20px;align-items:flex-start;">
@@ -162,10 +164,8 @@ function post03() {
   }
   return `<div data-export-name="post-03-library-closes-late" style="width:1080px;height:1350px;background:${OW};position:relative;overflow:hidden;font-family:${F};">
     ${logoBar('top')}
-    <!-- Subtle gradient -->
-    <div style="position:absolute;top:0;left:0;right:0;bottom:0;background:radial-gradient(circle at top right, rgba(230,255,0,0.12) 0%, transparent 50%);z-index:1;"></div>
+    <div style="position:absolute;top:0;left:0;right:0;bottom:0;background:radial-gradient(circle at top right, rgba(7,108,199,0.08) 0%, transparent 50%);z-index:1;"></div>
     <div style="position:absolute;top:0;left:0;right:0;bottom:0;display:flex;flex-direction:column;justify-content:center;padding:140px 64px;z-index:5;">
-      <!-- Time pill -->
       <div style="background:${WH};border:1px solid ${BD};border-radius:100px;padding:10px 24px;display:inline-flex;align-self:flex-start;margin-bottom:36px;box-shadow:0 2px 8px rgba(0,0,0,0.04);">
         <span style="font-weight:600;font-size:16px;color:#666;letter-spacing:0.02em;">11:47 PM  /  Tuesday</span>
       </div>
@@ -176,29 +176,27 @@ function post03() {
       </div>
       <div style="margin-top:48px;border-top:3px solid ${BK};padding-top:28px;">
         <p style="font-weight:800;font-size:38px;color:${BK};margin:0;line-height:1.12;letter-spacing:-0.03em;">Now you're both walking home.</p>
-        <p style="font-weight:500;font-size:26px;color:${GY};margin:10px 0 0;">And it's just... ${highlight('lighter.')}</p>
+        <p style="font-weight:500;font-size:26px;color:${GY};margin:10px 0 0;">And it's just... ${hl('lighter.')}</p>
       </div>
     </div>
     ${logoBar('bottom')}
   </div>`;
 }
 
-// ── POST 04: Not Another Safety App (White bg, bold statement) ──
+// ── 04: Not Another Safety App (White, bold statement) ──
 function post04() {
   return `<div data-export-name="post-04-not-another-safety-app" style="width:1080px;height:1350px;background:${WH};position:relative;overflow:hidden;font-family:${F};">
     ${logoBar('top')}
-    <!-- Yellow corner accent -->
-    <div style="position:absolute;bottom:120px;right:-60px;width:400px;height:400px;border-radius:50%;background:${Y};opacity:0.2;z-index:1;"></div>
+    <div style="position:absolute;bottom:120px;right:-60px;width:400px;height:400px;border-radius:50%;background:${BL};opacity:0.06;z-index:1;"></div>
     <div style="position:absolute;top:0;left:0;right:0;bottom:120px;display:flex;flex-direction:column;justify-content:center;padding:140px 64px;z-index:5;">
       <h1 style="font-weight:800;font-size:74px;line-height:0.97;letter-spacing:-0.04em;color:${BK};margin:0;">
-        We didn't<br>build another<br>${highlight('safety')} app.
+        We didn't<br>build another<br>${hl('safety')} app.
       </h1>
-      <div style="width:60px;height:4px;background:${BK};margin:36px 0;border-radius:2px;"></div>
+      <div style="width:60px;height:4px;background:${BL};margin:36px 0;border-radius:2px;"></div>
       <p style="font-weight:400;font-size:26px;color:#666;margin:0;line-height:1.45;max-width:700px;">
         We built one that gives you <span style="font-weight:700;color:${BK};">another woman going your way</span> — so the walk home feels lighter, not heavier.
       </p>
     </div>
-    <!-- Black CTA bar -->
     <div style="position:absolute;bottom:0;left:0;right:0;background:${BK};padding:32px 64px;display:flex;justify-content:space-between;align-items:center;z-index:10;">
       <p style="font-weight:600;font-size:18px;color:${WH};margin:0;line-height:1.3;">Safety should feel like<br>a deep breath, not a held one.</p>
       <p style="font-weight:700;font-size:16px;color:${GY};margin:0;">sidexside.ai</p>
@@ -206,32 +204,195 @@ function post04() {
   </div>`;
 }
 
-// ── POST 05: 73% Stat (Black bg, high contrast) ──
-function post05() {
-  return `<div data-export-name="post-05-73-percent" style="width:1080px;height:1080px;background:${BK};position:relative;overflow:hidden;font-family:${F};">
+// ── 05: Move Your Way (Blue bg, brand hero) ──
+function post05Blue() {
+  return `<div data-export-name="post-05-move-your-way" style="width:1080px;height:1350px;background:linear-gradient(160deg, ${BL} 0%, ${BLD} 100%);position:relative;overflow:hidden;font-family:${F};">
+    ${logoBar('top', WH, 'rgba(255,255,255,0.4)')}
+    <!-- Yellow circle accents -->
+    <div style="position:absolute;top:-100px;right:-100px;width:450px;height:450px;border-radius:50%;background:${Y};opacity:0.15;z-index:1;"></div>
+    <div style="position:absolute;bottom:100px;left:-80px;width:300px;height:300px;border-radius:50%;background:${Y};opacity:0.1;z-index:1;"></div>
+    <div style="position:absolute;top:0;left:0;right:0;bottom:0;display:flex;flex-direction:column;justify-content:center;padding:140px 64px;z-index:5;">
+      <div style="font-weight:600;font-size:15px;color:rgba(255,255,255,0.6);margin-bottom:20px;letter-spacing:0.08em;text-transform:uppercase;">Introducing</div>
+      <h1 style="font-weight:900;font-size:90px;line-height:0.92;letter-spacing:-0.04em;color:${WH};margin:0;">
+        Move<br>your<br><span style="background:${Y};padding:0 14px;border-radius:10px;color:${BK};">way.</span>
+      </h1>
+      <p style="font-weight:400;font-size:26px;color:rgba(255,255,255,0.75);margin-top:32px;line-height:1.45;max-width:650px;">
+        Instantly match with another woman heading your direction. No planning. No tracking. Just go.
+      </p>
+      <div style="margin-top:44px;">${pill('Get started — sidexside.ai', Y, BK)}</div>
+    </div>
+    ${logoBar('bottom', WH, 'rgba(255,255,255,0.4)')}
+  </div>`;
+}
+
+// ── 06: Someone's Going Your Way (Blue gradient) ──
+function post06Blue() {
+  return `<div data-export-name="post-06-someones-going-your-way" style="width:1080px;height:1350px;background:linear-gradient(180deg, #E8F4FF 0%, ${WH} 50%, #F0F7FF 100%);position:relative;overflow:hidden;font-family:${F};">
+    ${logoBar('top', BL, 'rgba(7,108,199,0.3)')}
+    <!-- Blue circle -->
+    <div style="position:absolute;top:200px;right:-100px;width:500px;height:500px;border-radius:50%;background:${BL};opacity:0.06;z-index:1;"></div>
+    <div style="position:absolute;top:0;left:0;right:0;bottom:0;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:140px 64px;z-index:5;">
+      <div style="background:${BL};color:${WH};font-weight:600;font-size:14px;padding:8px 20px;border-radius:100px;margin-bottom:32px;letter-spacing:0.02em;">RIGHT NOW, NEAR YOU</div>
+      <h1 style="font-weight:800;font-size:76px;line-height:0.97;letter-spacing:-0.04em;color:${BK};margin:0;">
+        Someone's<br>already going<br>${hlBlue('your way.')}
+      </h1>
+      <p style="font-weight:400;font-size:24px;color:#666;margin-top:28px;line-height:1.5;max-width:600px;">
+        Open sidexside. Find your match. Walk together. It's that easy.
+      </p>
+      <div style="margin-top:40px;display:flex;gap:16px;">
+        ${pill('Download the app', BK, WH)}
+        ${pill('Learn more', WH, BK).replace('border-radius:100px;','border-radius:100px;border:2px solid #E5E5E5;')}
+      </div>
+    </div>
+    ${logoBar('bottom', BK, GY)}
+  </div>`;
+}
+
+// ── 07: Verified. Women-Only. (White bg, feature list) ──
+function post07() {
+  function feat(emoji, title, desc) {
+    return `<div style="display:flex;align-items:flex-start;gap:20px;padding:22px 0;border-bottom:1px solid ${BD};">
+      <div style="width:48px;height:48px;border-radius:14px;background:${Y};display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;border:1px solid rgba(0,0,0,0.05);">${emoji}</div>
+      <div>
+        <h3 style="font-weight:700;font-size:22px;color:${BK};margin:0;line-height:1.2;letter-spacing:-0.02em;">${title}</h3>
+        <p style="font-weight:400;font-size:17px;color:${GY};margin:4px 0 0;line-height:1.4;">${desc}</p>
+      </div>
+    </div>`;
+  }
+  return `<div data-export-name="post-07-verified-women-only" style="width:1080px;height:1350px;background:${WH};position:relative;overflow:hidden;font-family:${F};">
+    ${logoBar('top')}
+    <div style="position:absolute;top:80px;right:-100px;width:400px;height:400px;border-radius:50%;background:${BL};opacity:0.05;z-index:1;"></div>
+    <div style="position:absolute;top:0;left:0;right:0;bottom:0;display:flex;flex-direction:column;padding:130px 64px;z-index:5;">
+      <h1 style="font-weight:800;font-size:58px;line-height:1.02;letter-spacing:-0.04em;color:${BK};margin:0 0 6px;">Verified.<br>${hl('Women-only.')}<br>Always.</h1>
+      <p style="font-style:italic;font-size:20px;color:${GY};margin:0 0 36px;">"How do you know it's really all women?"</p>
+      <div style="flex:1;display:flex;flex-direction:column;justify-content:center;">
+        ${feat('📋','ID verification','Government-issued ID confirmed before entry.')}
+        ${feat('🤳','Live selfie match','Your face matches your ID. Every time.')}
+        ${feat('⏱️','48-hour manual review','Real humans review every single signup.')}
+        ${feat('💛','Post-trip pulse check','One bad vibe? They\'re out. We verify energy.')}
+      </div>
+      <div style="margin-top:28px;border-top:3px solid ${BK};padding-top:20px;">
+        <p style="font-weight:600;font-size:20px;color:${BK};margin:0;text-align:center;">This is a women-only space. ${hl('And we keep it that way.')}</p>
+      </div>
+    </div>
+    ${logoBar('bottom')}
+  </div>`;
+}
+
+// ── 08: Women Looking Out for Women (Light blue bg) ──
+function post08Sisterhood() {
+  return `<div data-export-name="post-08-sisterhood" style="width:1080px;height:1350px;background:linear-gradient(180deg, #EAF3FF 0%, ${WH} 100%);position:relative;overflow:hidden;font-family:${F};">
+    ${logoBar('top', BK, BL)}
+    <div style="position:absolute;bottom:-60px;right:-60px;width:400px;height:400px;border-radius:50%;background:${BL};opacity:0.07;z-index:1;"></div>
+    <div style="position:absolute;top:0;left:0;right:0;bottom:0;display:flex;flex-direction:column;justify-content:center;padding:140px 64px;z-index:5;">
+      <div style="font-weight:600;font-size:14px;color:${BL};margin-bottom:20px;letter-spacing:0.08em;text-transform:uppercase;">Core value</div>
+      <h1 style="font-weight:800;font-size:72px;line-height:0.95;letter-spacing:-0.04em;color:${BK};margin:0;">
+        Women<br>looking out<br>for ${hlBlue('women.')}
+      </h1>
+      <p style="font-weight:400;font-size:24px;color:#666;margin-top:28px;line-height:1.5;max-width:650px;">
+        Every match is mutual. Every walk is shared. Every journey makes the network stronger for the next woman.
+      </p>
+      <div style="margin-top:48px;display:flex;gap:24px;">
+        <div style="text-align:center;">
+          <div style="font-weight:900;font-size:48px;color:${BL};letter-spacing:-0.03em;">45-80%</div>
+          <div style="font-weight:500;font-size:15px;color:${GY};margin-top:4px;">reduced perceived<br>risk with shared presence</div>
+        </div>
+        <div style="width:1px;background:${BD};"></div>
+        <div style="text-align:center;">
+          <div style="font-weight:900;font-size:48px;color:${BL};letter-spacing:-0.03em;">100%</div>
+          <div style="font-weight:500;font-size:15px;color:${GY};margin-top:4px;">mutual opt-in<br>every single match</div>
+        </div>
+      </div>
+    </div>
+    ${logoBar('bottom')}
+  </div>`;
+}
+
+// ── 09: No Planning Needed (White, feature highlight) ──
+function post09NoPlan() {
+  return `<div data-export-name="post-09-no-planning" style="width:1080px;height:1350px;background:${WH};position:relative;overflow:hidden;font-family:${F};">
+    ${logoBar('top')}
+    <div style="position:absolute;top:-50px;left:-50px;width:350px;height:350px;border-radius:50%;background:${Y};opacity:0.25;z-index:1;"></div>
+    <div style="position:absolute;top:0;left:0;right:0;bottom:0;display:flex;flex-direction:column;justify-content:center;padding:140px 64px;z-index:5;">
+      <h1 style="font-weight:800;font-size:72px;line-height:0.95;letter-spacing:-0.04em;color:${BK};margin:0 0 40px;">
+        No planning.<br>No scheduling.<br>No ${hl('texting')} the<br>group chat.
+      </h1>
+      <div style="display:flex;flex-direction:column;gap:20px;max-width:650px;">
+        <div style="display:flex;align-items:center;gap:16px;">
+          <div style="width:44px;height:44px;border-radius:50%;background:${Y};display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;border:1px solid rgba(0,0,0,0.05);">✓</div>
+          <span style="font-weight:500;font-size:22px;color:#333;">Open the app when you're heading out</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:16px;">
+          <div style="width:44px;height:44px;border-radius:50%;background:${Y};display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;border:1px solid rgba(0,0,0,0.05);">✓</div>
+          <span style="font-weight:500;font-size:22px;color:#333;">Get matched instantly — same direction</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:16px;">
+          <div style="width:44px;height:44px;border-radius:50%;background:${Y};display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;border:1px solid rgba(0,0,0,0.05);">✓</div>
+          <span style="font-weight:500;font-size:22px;color:#333;">Walk together. That's it.</span>
+        </div>
+      </div>
+      <div style="margin-top:44px;">${pill('Try sidexside', BL, WH)}</div>
+    </div>
+    ${logoBar('bottom')}
+  </div>`;
+}
+
+// ── 10: Your Data Disappears (Blue bg, privacy) ──
+function post10Privacy() {
+  return `<div data-export-name="post-10-data-disappears" style="width:1080px;height:1350px;background:linear-gradient(160deg, ${BL} 0%, #034B8A 100%);position:relative;overflow:hidden;font-family:${F};">
+    ${logoBar('top', WH, 'rgba(255,255,255,0.35)')}
+    <div style="position:absolute;top:0;left:0;right:0;bottom:0;display:flex;flex-direction:column;justify-content:center;padding:140px 64px;z-index:5;">
+      <div style="background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.15);border-radius:100px;padding:8px 20px;display:inline-flex;align-self:flex-start;margin-bottom:28px;">
+        <span style="font-weight:600;font-size:14px;color:rgba(255,255,255,0.7);letter-spacing:0.04em;">PRIVACY FIRST</span>
+      </div>
+      <h1 style="font-weight:800;font-size:74px;line-height:0.95;letter-spacing:-0.04em;color:${WH};margin:0;">
+        Your data<br>disappears<br>the moment<br>the trip <span style="background:${Y};padding:0 10px;border-radius:8px;color:${BK};">ends.</span>
+      </h1>
+      <div style="margin-top:44px;display:flex;flex-direction:column;gap:16px;">
+        <div style="display:flex;align-items:center;gap:14px;">
+          <div style="width:8px;height:8px;border-radius:50%;background:${Y};flex-shrink:0;"></div>
+          <span style="font-weight:500;font-size:22px;color:rgba(255,255,255,0.8);">Chats auto-delete after every trip</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:14px;">
+          <div style="width:8px;height:8px;border-radius:50%;background:${Y};flex-shrink:0;"></div>
+          <span style="font-weight:500;font-size:22px;color:rgba(255,255,255,0.8);">No location history ever stored</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:14px;">
+          <div style="width:8px;height:8px;border-radius:50%;background:${Y};flex-shrink:0;"></div>
+          <span style="font-weight:500;font-size:22px;color:rgba(255,255,255,0.8);">Zero data retention — that's a promise</span>
+        </div>
+      </div>
+    </div>
+    ${logoBar('bottom', WH, 'rgba(255,255,255,0.35)')}
+  </div>`;
+}
+
+// ═══════════════════════════════════════
+// SQUARE POSTS (1080×1080)
+// ═══════════════════════════════════════
+
+// ── S1: 73% Stat (Black) ──
+function sq01() {
+  return `<div data-export-name="sq-01-73-percent" style="width:1080px;height:1080px;background:${BK};position:relative;overflow:hidden;font-family:${F};">
     ${logoBar('top', WH, '#555')}
     <div style="position:absolute;top:0;left:0;right:0;bottom:0;display:flex;flex-direction:column;justify-content:center;align-items:center;padding:100px 60px;z-index:5;">
       <div style="font-weight:900;font-size:200px;color:${Y};line-height:0.85;letter-spacing:-0.05em;">73%</div>
       <p style="font-weight:400;font-size:26px;color:${WH};text-align:center;margin:28px 0 0;line-height:1.4;max-width:650px;">of college students said they want <span style="font-weight:700;">company on walks.</span></p>
       <div style="width:50px;height:3px;background:${Y};margin:32px 0;border-radius:2px;"></div>
-      <p style="font-weight:500;font-size:20px;color:#777;text-align:center;margin:0;line-height:1.45;"><span style="color:${Y};font-weight:700;">89%</span> on large campuses wish it felt smaller.</p>
-      <p style="font-weight:700;font-size:22px;color:${WH};text-align:center;margin:32px 0 0;letter-spacing:-0.02em;">sidexside was built for ${highlight('exactly')} this.</p>
+      <p style="font-weight:500;font-size:20px;color:#777;text-align:center;margin:0;"><span style="color:${Y};font-weight:700;">89%</span> on large campuses wish it felt smaller.</p>
+      <p style="font-weight:700;font-size:22px;color:${WH};text-align:center;margin:32px 0 0;letter-spacing:-0.02em;">sidexside was built for ${hl('exactly')} this.</p>
     </div>
     ${logoBar('bottom', WH, '#555')}
   </div>`;
 }
 
-// ── POST 07: Every Journey Helps (Split: white top, black bottom) ──
-function post07() {
-  return `<div data-export-name="post-07-every-journey-helps" style="width:1080px;height:1080px;background:${WH};position:relative;overflow:hidden;font-family:${F};">
-    <!-- Top section: white -->
+// ── S2: Every Journey Helps (White + black split) ──
+function sq02() {
+  return `<div data-export-name="sq-02-every-journey-helps" style="width:1080px;height:1080px;background:${WH};position:relative;overflow:hidden;font-family:${F};">
     <div style="position:absolute;top:0;left:0;right:0;height:55%;display:flex;flex-direction:column;justify-content:center;align-items:center;padding:60px;z-index:5;">
       ${logo()}
-      <h1 style="font-weight:800;font-size:68px;line-height:1.0;letter-spacing:-0.04em;color:${BK};text-align:center;margin:40px 0 0;">
-        Every<br><span style="background:${Y};padding:0 12px;border-radius:8px;">journey</span><br>helps.
-      </h1>
+      <h1 style="font-weight:800;font-size:68px;line-height:1.0;letter-spacing:-0.04em;color:${BK};text-align:center;margin:40px 0 0;">Every<br>${hl('journey')}<br>helps.</h1>
     </div>
-    <!-- Bottom section: black -->
     <div style="position:absolute;bottom:0;left:0;right:0;height:45%;background:${BK};display:flex;flex-direction:column;justify-content:center;padding:40px 64px;z-index:5;">
       <div style="display:flex;align-items:baseline;gap:16px;margin-bottom:16px;">
         <span style="font-weight:900;font-size:72px;color:${Y};line-height:1;letter-spacing:-0.04em;">1%</span>
@@ -243,97 +404,132 @@ function post07() {
   </div>`;
 }
 
-// ── POST 08: Verified. Women-Only. (White bg, feature list) ──
-function post08() {
-  function feat(emoji, title, desc) {
-    return `<div style="display:flex;align-items:flex-start;gap:20px;padding:22px 0;border-bottom:1px solid ${BD};">
-      <div style="width:48px;height:48px;border-radius:14px;background:${Y};display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;border:1px solid rgba(0,0,0,0.05);">${emoji}</div>
-      <div>
-        <h3 style="font-weight:700;font-size:22px;color:${BK};margin:0;line-height:1.2;letter-spacing:-0.02em;">${title}</h3>
-        <p style="font-weight:400;font-size:17px;color:${GY};margin:4px 0 0;line-height:1.4;">${desc}</p>
-      </div>
-    </div>`;
-  }
-  return `<div data-export-name="post-08-verified-women-only" style="width:1080px;height:1350px;background:${WH};position:relative;overflow:hidden;font-family:${F};">
+// ── S3: Travel Safer Together (Blue bg square) ──
+function sq03Blue() {
+  return `<div data-export-name="sq-03-travel-safer-together" style="width:1080px;height:1080px;background:linear-gradient(135deg, ${BL} 0%, ${BLD} 100%);position:relative;overflow:hidden;font-family:${F};">
+    ${logoBar('top', WH, 'rgba(255,255,255,0.35)')}
+    <div style="position:absolute;top:-80px;right:-80px;width:400px;height:400px;border-radius:50%;background:${Y};opacity:0.12;z-index:1;"></div>
+    <div style="position:absolute;top:0;left:0;right:0;bottom:0;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:100px 64px;z-index:5;">
+      <h1 style="font-weight:900;font-size:80px;line-height:0.92;letter-spacing:-0.04em;color:${WH};margin:0;">
+        Travel<br><span style="background:${Y};padding:0 14px;border-radius:10px;color:${BK};">safer,</span><br>together.
+      </h1>
+      <p style="font-weight:400;font-size:24px;color:rgba(255,255,255,0.7);margin-top:28px;line-height:1.5;max-width:550px;">The women-only app that connects you with another woman going your way — instantly.</p>
+      <div style="margin-top:36px;">${pill('sidexside.ai', Y, BK)}</div>
+    </div>
+    ${logoBar('bottom', WH, 'rgba(255,255,255,0.35)')}
+  </div>`;
+}
+
+// ── S4: Never Walk Alone (Light, clean) ──
+function sq04NeverAlone() {
+  return `<div data-export-name="sq-04-never-walk-alone" style="width:1080px;height:1080px;background:${WH};position:relative;overflow:hidden;font-family:${F};">
     ${logoBar('top')}
-    <!-- Subtle yellow glow -->
-    <div style="position:absolute;top:80px;right:-100px;width:400px;height:400px;border-radius:50%;background:${Y};opacity:0.15;z-index:1;"></div>
-    <div style="position:absolute;top:0;left:0;right:0;bottom:0;display:flex;flex-direction:column;padding:130px 64px;z-index:5;">
-      <h1 style="font-weight:800;font-size:58px;line-height:1.02;letter-spacing:-0.04em;color:${BK};margin:0 0 6px;">Verified.<br>${highlight('Women-only.')}<br>Always.</h1>
-      <p style="font-style:italic;font-size:20px;color:${GY};margin:0 0 36px;">"How do you know it's really all women?"</p>
-      <div style="flex:1;display:flex;flex-direction:column;justify-content:center;">
-        ${feat('📋','ID verification','Government-issued ID confirmed before entry.')}
-        ${feat('🤳','Live selfie match','Your face matches your ID. Every time.')}
-        ${feat('⏱️','48-hour manual review','Real humans review every single signup.')}
-        ${feat('💛','Post-trip pulse check','One bad vibe? They\'re out. We verify energy.')}
-      </div>
-      <div style="margin-top:28px;border-top:3px solid ${BK};padding-top:20px;">
-        <p style="font-weight:600;font-size:20px;color:${BK};margin:0;text-align:center;">This is a women-only space. ${highlight('And we keep it that way.')}</p>
+    <div style="position:absolute;bottom:-80px;left:-80px;width:400px;height:400px;border-radius:50%;background:${BL};opacity:0.06;z-index:1;"></div>
+    <div style="position:absolute;top:-60px;right:-60px;width:300px;height:300px;border-radius:50%;background:${Y};opacity:0.2;z-index:1;"></div>
+    <div style="position:absolute;top:0;left:0;right:0;bottom:0;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:80px 64px;z-index:5;">
+      <h1 style="font-weight:900;font-size:84px;line-height:0.92;letter-spacing:-0.05em;color:${BK};margin:0;">
+        Never<br>walk alone<br>${hl('again.')}
+      </h1>
+      <p style="font-weight:400;font-size:22px;color:#666;margin-top:24px;line-height:1.5;max-width:550px;">
+        Real-time matching. Privacy-first. Women only.
+      </p>
+      <div style="margin-top:32px;display:flex;gap:12px;">
+        ${pill('Get the app', BK, WH)}
       </div>
     </div>
     ${logoBar('bottom')}
   </div>`;
 }
 
-// ── CAROUSEL SLIDES ──
-function dots(active, total=5) {
+// ── S5: $12/month (Blue bg, pricing) ──
+function sq05Pricing() {
+  return `<div data-export-name="sq-05-pricing" style="width:1080px;height:1080px;background:linear-gradient(160deg,#EAF3FF 0%,${WH} 100%);position:relative;overflow:hidden;font-family:${F};">
+    ${logoBar('top', BK, BL)}
+    <div style="position:absolute;top:0;left:0;right:0;bottom:0;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:100px 64px;z-index:5;">
+      <div style="background:${BL};color:${WH};font-weight:600;font-size:14px;padding:8px 20px;border-radius:100px;margin-bottom:28px;">SIMPLE PRICING</div>
+      <div style="font-weight:900;font-size:140px;color:${BK};line-height:0.85;letter-spacing:-0.05em;">$12</div>
+      <div style="font-weight:500;font-size:28px;color:#666;margin-top:8px;">/month. That's it.</div>
+      <div style="width:50px;height:3px;background:${BL};margin:32px 0;border-radius:2px;"></div>
+      <div style="display:flex;flex-direction:column;gap:12px;text-align:left;">
+        <div style="display:flex;align-items:center;gap:12px;">
+          <div style="width:8px;height:8px;border-radius:50%;background:${BL};flex-shrink:0;"></div>
+          <span style="font-weight:500;font-size:20px;color:#444;">No ads. No data selling. No tricks.</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:12px;">
+          <div style="width:8px;height:8px;border-radius:50%;background:${BL};flex-shrink:0;"></div>
+          <span style="font-weight:500;font-size:20px;color:#444;">Full access to everything.</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:12px;">
+          <div style="width:8px;height:8px;border-radius:50%;background:${BL};flex-shrink:0;"></div>
+          <span style="font-weight:500;font-size:20px;color:#444;">Cancel anytime in your phone settings.</span>
+        </div>
+      </div>
+    </div>
+    ${logoBar('bottom', BK, BL)}
+  </div>`;
+}
+
+// ═══════════════════════════════════════
+// CAROUSEL (5 slides, 1080×1080)
+// ═══════════════════════════════════════
+
+function dots(active, total=5, dark=true) {
   let d='';
   for(let i=1;i<=total;i++){
     const w=i===active?'24px':'8px';
-    const bg=i===active?BK:'#DDD';
+    const bg=i===active?(dark?BK:WH):(dark?'#DDD':'rgba(255,255,255,0.3)');
     d+=`<div style="width:${w};height:8px;border-radius:4px;background:${bg};"></div>`;
   }
   return `<div style="position:absolute;top:40px;left:50%;transform:translateX(-50%);display:flex;gap:8px;z-index:10;">${d}</div>`;
 }
-
-function slideLogoBar() {
+function sLogo(dark=true) {
+  const c=dark?BK:WH, y=dark?GY:'rgba(255,255,255,0.4)';
   return `<div style="position:absolute;bottom:32px;left:48px;right:48px;display:flex;justify-content:space-between;align-items:center;">
-    ${logo()}
-    <span style="font-family:${F};font-weight:600;font-size:14px;color:#999;">sidexside.ai</span>
+    ${logo(c,y)}<span style="font-family:${F};font-weight:600;font-size:14px;color:${dark?GY:'rgba(255,255,255,0.5)'};">sidexside.ai</span>
   </div>`;
 }
 
-function slide1() {
-  return `<div data-export-name="carousel-slide-1" style="width:1080px;height:1080px;background:${WH};position:relative;overflow:hidden;font-family:${F};">
+function cSlide1() {
+  return `<div data-export-name="carousel-01-cover" style="width:1080px;height:1080px;background:${WH};position:relative;overflow:hidden;font-family:${F};">
     ${dots(1)}
     <div style="position:absolute;top:-60px;right:-80px;width:400px;height:400px;border-radius:50%;background:${Y};opacity:0.3;z-index:1;"></div>
+    <div style="position:absolute;bottom:-40px;left:-40px;width:250px;height:250px;border-radius:50%;background:${BL};opacity:0.08;z-index:1;"></div>
     <div style="position:absolute;top:0;left:0;right:0;bottom:0;display:flex;flex-direction:column;justify-content:center;padding:100px 64px;z-index:5;">
-      <h2 style="font-weight:800;font-size:64px;line-height:1.05;letter-spacing:-0.04em;color:${BK};margin:0 0 20px;">How sidexside<br>${highlight('works')}</h2>
+      <h2 style="font-weight:800;font-size:64px;line-height:1.05;letter-spacing:-0.04em;color:${BK};margin:0 0 20px;">How sidexside<br>${hl('works')}</h2>
       <p style="font-weight:400;font-size:24px;color:#666;margin:0;">4 steps to never walking alone again.</p>
     </div>
-    ${slideLogoBar()}
+    ${sLogo()}
   </div>`;
 }
-
-function slideStep(num, step, title, desc, icon) {
-  return `<div data-export-name="carousel-slide-${num}" style="width:1080px;height:1080px;background:${OW};position:relative;overflow:hidden;font-family:${F};">
+function cStep(num, step, title, desc, icon) {
+  return `<div data-export-name="carousel-0${num}-step-${step}" style="width:1080px;height:1080px;background:${OW};position:relative;overflow:hidden;font-family:${F};">
     ${dots(num)}
     <div style="position:absolute;top:0;left:0;right:0;bottom:0;display:flex;flex-direction:column;justify-content:center;padding:80px 64px;z-index:5;">
-      <div style="font-weight:900;font-size:120px;color:${BK};line-height:0.85;letter-spacing:-0.05em;margin-bottom:12px;opacity:0.08;">${String(step).padStart(2,'0')}</div>
+      <div style="font-weight:900;font-size:120px;color:${BK};line-height:0.85;letter-spacing:-0.05em;margin-bottom:12px;opacity:0.06;">${String(step).padStart(2,'0')}</div>
       <div style="font-size:40px;margin-bottom:16px;">${icon}</div>
       <h2 style="font-weight:800;font-size:44px;color:${BK};margin:0 0 14px;line-height:1.08;letter-spacing:-0.03em;">${title}</h2>
       <p style="font-weight:400;font-size:22px;color:#666;margin:0;line-height:1.4;max-width:700px;">${desc}</p>
     </div>
-    ${slideLogoBar()}
+    ${sLogo()}
   </div>`;
 }
-
-function slide5() {
-  return `<div data-export-name="carousel-slide-5" style="width:1080px;height:1080px;background:${BK};position:relative;overflow:hidden;font-family:${F};">
-    ${dots(5).replace(/#DDD/g,'#444').replace(/background:${BK}/g,'background:'+Y)}
+function cSlide5() {
+  return `<div data-export-name="carousel-05-cta" style="width:1080px;height:1080px;background:linear-gradient(160deg,${BL} 0%,${BLD} 100%);position:relative;overflow:hidden;font-family:${F};">
+    ${dots(5, 5, false)}
+    <div style="position:absolute;top:-60px;right:-60px;width:350px;height:350px;border-radius:50%;background:${Y};opacity:0.1;z-index:1;"></div>
     <div style="position:absolute;top:0;left:0;right:0;bottom:0;display:flex;flex-direction:column;justify-content:center;padding:100px 64px;z-index:5;">
-      <h2 style="font-weight:800;font-size:64px;line-height:1.05;letter-spacing:-0.04em;color:${WH};margin:0 0 20px;">That's ${highlight('it.')}</h2>
-      <p style="font-weight:400;font-size:24px;color:#999;margin:0 0 36px;max-width:85%;line-height:1.5;">No planning. No tracking. No data trail.<br>Just real-time connection when you need it.</p>
+      <h2 style="font-weight:800;font-size:64px;line-height:1.05;letter-spacing:-0.04em;color:${WH};margin:0 0 20px;">That's <span style="background:${Y};padding:0 10px;border-radius:8px;color:${BK};">it.</span></h2>
+      <p style="font-weight:400;font-size:24px;color:rgba(255,255,255,0.7);margin:0 0 36px;max-width:85%;line-height:1.5;">No planning. No tracking. No data trail.<br>Just real-time connection when you need it.</p>
       ${pill('Join the waitlist', Y, BK)}
     </div>
-    <div style="position:absolute;bottom:32px;left:48px;right:48px;display:flex;justify-content:space-between;align-items:center;">
-      ${logo(WH, '#555')}
-      <span style="font-family:${F};font-weight:600;font-size:14px;color:#555;">sidexside.ai</span>
-    </div>
+    ${sLogo(false)}
   </div>`;
 }
 
-// ── Render ──
+// ═══════════════════════════════════════
+// RENDER & EXPORT
+// ═══════════════════════════════════════
+
 function renderCard(html, title, w, h, container) {
   const pw=Math.round(w*S), ph=Math.round(h*S);
   const card=document.createElement('div');
@@ -350,7 +546,6 @@ function renderCard(html, title, w, h, container) {
   container.appendChild(card);
 }
 
-// ── Export ──
 async function doExport(el) {
   const name=el.getAttribute('data-export-name');
   const cont=document.createElement('div');
@@ -369,7 +564,6 @@ async function doExport(el) {
     link.click();
   } catch(e){console.error(e);}
   document.body.removeChild(cont);
-  return name;
 }
 
 async function exportSingle(btn) {
@@ -388,7 +582,7 @@ async function exportAll() {
     await doExport(els[i]);
     await new Promise(r=>setTimeout(r,700));
   }
-  st.textContent=`Done! Exported ${els.length} PNGs.`;
+  st.textContent=`Done! ${els.length} PNGs exported.`;
   setTimeout(()=>{st.textContent='';},4000);
 }
 
@@ -398,20 +592,31 @@ window.addEventListener('DOMContentLoaded',()=>{
   const sg=document.getElementById('square-grid');
   const cr=document.getElementById('carousel-row');
 
+  // Portrait posts (10 total)
   renderCard(post01(),'01: The Last Few Blocks',1080,1350,pg);
   renderCard(post02(),'02: Things We Don\'t Save',1080,1350,pg);
   renderCard(post03(),'03: Library Closes Late',1080,1350,pg);
   renderCard(post04(),'04: Not Another Safety App',1080,1350,pg);
-  renderCard(post08(),'08: Verified. Women-Only.',1080,1350,pg);
+  renderCard(post05Blue(),'05: Move Your Way',1080,1350,pg);
+  renderCard(post06Blue(),'06: Someone\'s Going Your Way',1080,1350,pg);
+  renderCard(post07(),'07: Verified. Women-Only.',1080,1350,pg);
+  renderCard(post08Sisterhood(),'08: Sisterhood',1080,1350,pg);
+  renderCard(post09NoPlan(),'09: No Planning Needed',1080,1350,pg);
+  renderCard(post10Privacy(),'10: Your Data Disappears',1080,1350,pg);
 
-  renderCard(post05(),'05: 73% Want Company',1080,1080,sg);
-  renderCard(post07(),'07: Every Journey Helps',1080,1080,sg);
+  // Square posts (5 total)
+  renderCard(sq01(),'S1: 73% Want Company',1080,1080,sg);
+  renderCard(sq02(),'S2: Every Journey Helps',1080,1080,sg);
+  renderCard(sq03Blue(),'S3: Travel Safer Together',1080,1080,sg);
+  renderCard(sq04NeverAlone(),'S4: Never Walk Alone',1080,1080,sg);
+  renderCard(sq05Pricing(),'S5: $12/month',1080,1080,sg);
 
-  renderCard(slide1(),'Slide 1: Cover',1080,1080,cr);
-  renderCard(slideStep(2,1,'Open sidexside','Heading out? Just tap open. The app instantly sees who else is nearby and going your direction.','📱'),'Slide 2',1080,1080,cr);
-  renderCard(slideStep(3,2,'Match with a woman going your way','Within seconds, you\'re connected with another verified woman heading the same direction.','🤝'),'Slide 3',1080,1080,cr);
-  renderCard(slideStep(4,3,'Walk together','Meet up and move together. Chat disappears after the trip. No data stored.','🚶'),'Slide 4',1080,1080,cr);
-  renderCard(slide5(),'Slide 5: CTA',1080,1080,cr);
+  // Carousel (5 slides)
+  renderCard(cSlide1(),'Slide 1: Cover',1080,1080,cr);
+  renderCard(cStep(2,1,'Open sidexside','Heading out? Just tap open. The app instantly sees who else is nearby and going your direction.','📱'),'Slide 2',1080,1080,cr);
+  renderCard(cStep(3,2,'Match with a woman going your way','Within seconds, you\'re connected with another verified woman heading the same direction.','🤝'),'Slide 3',1080,1080,cr);
+  renderCard(cStep(4,3,'Walk together','Meet up and move together. Chat disappears after the trip. No data stored.','🚶'),'Slide 4',1080,1080,cr);
+  renderCard(cSlide5(),'Slide 5: CTA',1080,1080,cr);
 });
 </script>
 </body>
