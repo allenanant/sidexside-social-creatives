@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>sidexside — B2B Social Creatives v4</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500;1,600;1,700;1,800&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{-webkit-font-smoothing:antialiased}
+  body{font-family:'Inter',system-ui,sans-serif;background:#F8F8F8;color:#050505}
+  header{position:sticky;top:0;z-index:100;background:rgba(255,255,255,0.92);backdrop-filter:blur(20px);border-bottom:1px solid #E5E5E5;padding:18px 40px;display:flex;justify-content:space-between;align-items:center}
+  header h1{font-size:22px;font-weight:800;letter-spacing:-1px;display:flex;align-items:center;gap:2px}
+  header h1 .x{color:#BBB}
+  header h1 .sub{font-weight:500;color:#999;margin-left:16px;font-size:14px;letter-spacing:0}
+  .export-all{background:#000;color:#fff;border:none;border-radius:100px;padding:12px 28px;font-weight:700;font-size:14px;cursor:pointer;font-family:'Inter',sans-serif;letter-spacing:-0.02em}
+  .export-all:hover{background:#333}
+  main{padding:40px;max-width:1400px;margin:0 auto}
+  section{margin-bottom:56px}
+  section h2{font-size:13px;font-weight:700;color:#999;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:20px}
+  .grid{display:flex;flex-wrap:wrap;gap:20px}
+  .carousel-row{display:flex;gap:16px;overflow-x:auto;padding-bottom:16px}
+  .card{background:#fff;border-radius:20px;border:1px solid #E5E5E5;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,0.04)}
+  .card-preview{overflow:hidden;position:relative}
+  .card-bar{padding:12px 16px;display:flex;justify-content:space-between;align-items:center;border-top:1px solid #F0F0F0}
+  .card-bar span{font-size:13px;font-weight:600;color:#333}
+  .export-btn{background:#000;color:#fff;border:none;border-radius:100px;padding:6px 16px;font-weight:600;font-size:12px;cursor:pointer;font-family:'Inter',sans-serif}
+  .export-btn:hover{background:#333}
+  #status{font-size:13px;color:#000;font-weight:600;margin-right:16px}
+  footer{border-top:1px solid #E5E5E5;padding:24px 40px;text-align:center;color:#999;font-size:13px}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>side<span class="x">x</span>side<span class="sub">B2B Creatives v4</span></h1>
+  <div style="display:flex;align-items:center">
+    <span id="status"></span>
+    <button class="export-all" onclick="exportAll()">Export All PNGs</button>
+  </div>
+</header>
+
+<main>
+  <section>
+    <h2>Pillar 1 — Campus Impact Stats (Portrait 1080 x 1350)</h2>
+    <div class="grid" id="stat-grid"></div>
+  </section>
+  <section>
+    <h2>Pillar 2 — What sidexside Does (Portrait 1080 x 1350)</h2>
+    <div class="grid" id="product-grid"></div>
+  </section>
+  <section>
+    <h2>Pillar 3 — University Partnership (Portrait 1080 x 1350)</h2>
+    <div class="grid" id="partner-grid"></div>
+  </section>
+  <section>
+    <h2>Pillar 4 — Mission & Values (Portrait 1080 x 1350)</h2>
+    <div class="grid" id="mission-grid"></div>
+  </section>
+  <section>
+    <h2>Square Posts — 1080 x 1080</h2>
+    <div class="grid" id="square-grid"></div>
+  </section>
+  <section>
+    <h2>Carousel — How sidexside Works on Your Campus (5 Slides)</h2>
+    <div class="carousel-row" id="carousel-row"></div>
+  </section>
+</main>
+
+<footer>sidexside B2B Social Media Creatives — 2026</footer>
+
+<script>
+const S = 0.33;
+const Y = '#E6FF00';
+const BK = '#000000';
+const WH = '#FFFFFF';
+const BL = '#076CC7';
+const DB = '#0558A3';
+const F = "'Inter',system-ui,sans-serif";
+
+// ═══════════════════════════════════════
+// SHARED COMPONENTS
+// ═══════════════════════════════════════
+
+function logoWhite(size=28) {
+  return `<div style="font-family:${F};font-weight:800;font-size:${size}px;color:${WH};letter-spacing:-1px;display:flex;align-items:center;gap:1px;text-shadow:0 2px 8px rgba(0,0,0,0.3);">side<span style="color:${Y};">x</span>side</div>`;
+}
+
+function logoDark(size=28) {
+  return `<div style="font-family:${F};font-weight:800;font-size:${size}px;color:${BK};letter-spacing:-1px;display:flex;align-items:center;gap:1px;">side<span style="color:${BL};">x</span>side</div>`;
+}
+
+function topBar(light=true) {
+  const logo = light ? logoWhite() : logoDark();
+  const urlColor = light ? WH : BK;
+  const urlOpacity = light ? '0.8' : '0.5';
+  const shadow = light ? 'text-shadow:0 2px 6px rgba(0,0,0,0.3);' : '';
+  return `<div style="position:absolute;top:0;left:0;right:0;display:flex;justify-content:space-between;align-items:center;padding:40px 48px;z-index:10;">
+    ${logo}
+    <div style="font-family:${F};font-weight:600;font-size:16px;color:${urlColor};letter-spacing:-0.01em;opacity:${urlOpacity};${shadow}">sidexside.ai</div>
+  </div>`;
+}
+
+function bottomBar(light=true) {
+  const logo = light ? logoWhite() : logoDark();
+  const urlColor = light ? WH : BK;
+  const urlOpacity = light ? '0.8' : '0.5';
+  const shadow = light ? 'text-shadow:0 2px 6px rgba(0,0,0,0.3);' : '';
+  return `<div style="position:absolute;bottom:0;left:0;right:0;display:flex;justify-content:space-between;align-items:center;padding:40px 48px;z-index:10;">
+    ${logo}
+    <div style="font-family:${F};font-weight:600;font-size:16px;color:${urlColor};letter-spacing:-0.01em;opacity:${urlOpacity};${shadow}">sidexside.ai</div>
+  </div>`;
+}
+
+function imgBg(name, w=1080, h=1350) {
+  return `background:url('images/${name}.png') center/cover no-repeat;width:${w}px;height:${h}px;position:relative;overflow:hidden;font-family:${F};`;
+}
+
+function solidBg(color, w=1080, h=1350) {
+  return `background:${color};width:${w}px;height:${h}px;position:relative;overflow:hidden;font-family:${F};`;
+}
+
+function pillBtn(text, bg=WH, color=BK) {
+  return `<div style="display:inline-block;background:${bg};color:${color};font-family:${F};font-weight:700;font-size:20px;padding:16px 36px;border-radius:100px;letter-spacing:-0.01em;">${text}</div>`;
+}
+
+// ═══════════════════════════════════════
+// PILLAR 1: CAMPUS IMPACT STATS (P1-P4)
+// ═══════════════════════════════════════
+
+function stat01() {
+  return `<div data-export-name="p01-73-percent" style="${solidBg(`linear-gradient(160deg,${BL} 0%,${DB} 100%)`)}">
+    ${topBar()}
+    <div style="position:absolute;top:-100px;right:-100px;width:500px;height:500px;border-radius:50%;background:${Y};opacity:0.08;z-index:1;"></div>
+    <div style="position:absolute;bottom:-80px;left:-80px;width:350px;height:350px;border-radius:50%;background:${WH};opacity:0.04;z-index:1;"></div>
+    <div style="position:absolute;top:0;left:0;right:0;bottom:0;display:flex;flex-direction:column;justify-content:center;padding:0 72px;z-index:5;">
+      <div style="font-weight:900;font-size:200px;color:${Y};line-height:0.85;letter-spacing:-0.06em;">73%</div>
+      <div style="width:60px;height:4px;background:${Y};margin:32px 0;border-radius:2px;"></div>
+      <p style="font-weight:400;font-size:32px;color:${WH};line-height:1.35;max-width:700px;">of women say they'd feel more comfortable walking with a companion.</p>
+      <p style="font-weight:700;font-size:24px;color:${Y};margin-top:32px;letter-spacing:-0.02em;">sidexside was built for exactly this.</p>
+    </div>
+    ${bottomBar()}
+  </div>`;
+}
+
+function stat02() {
+  return `<div data-export-name="p02-52-percent" style="${solidBg(BK)}">
+    ${topBar()}
+    <div style="position:absolute;top:-80px;left:-80px;width:400px;height:400px;border-radius:50%;background:${BL};opacity:0.12;z-index:1;"></div>
+    <div style="position:absolute;top:0;left:0;right:0;bottom:0;display:flex;flex-direction:column;justify-content:center;padding:0 72px;z-index:5;">
+      <div style="font-weight:900;font-size:200px;color:${Y};line-height:0.85;letter-spacing:-0.06em;">52%</div>
+      <div style="width:60px;height:4px;background:${BL};margin:32px 0;border-radius:2px;"></div>
+      <p style="font-weight:400;font-size:32px;color:${WH};line-height:1.35;max-width:700px;">report feeling disconnected on campus after dark.</p>
+      <p style="font-weight:700;font-size:24px;color:${BL};margin-top:32px;letter-spacing:-0.02em;">Connection changes that.</p>
+    </div>
+    ${bottomBar()}
+  </div>`;
+}
+
+function stat03() {
+  return `<div data-export-name="p03-retention" style="${solidBg(`linear-gradient(160deg,#003D73 0%,${DB} 100%)`)}">
+    ${topBar()}
+    <div style="position:absolute;top:50%;right:-60px;width:300px;height:300px;border-radius:50%;background:${Y};opacity:0.06;z-index:1;transform:translateY(-50%);"></div>
+    <div style="position:absolute;top:0;left:0;right:0;bottom:0;display:flex;flex-direction:column;justify-content:center;padding:0 72px;z-index:5;">
+      <h1 style="font-weight:900;font-size:72px;line-height:0.95;letter-spacing:-0.03em;color:${WH};text-transform:uppercase;margin:0;">
+        RETENTION<br>STARTS WITH<br><span style="color:${Y};">BELONGING</span>
+      </h1>
+      <div style="width:60px;height:4px;background:${Y};margin:36px 0;border-radius:2px;"></div>
+      <p style="font-weight:400;font-size:28px;color:rgba(255,255,255,0.8);line-height:1.4;max-width:700px;">Students who feel connected stay. sidexside builds that bridge.</p>
+    </div>
+    ${bottomBar()}
+  </div>`;
+}
+
+function stat04() {
+  return `<div data-export-name="p04-1-in-3" style="${solidBg(BK)}">
+    ${topBar()}
+    <div style="position:absolute;bottom:-60px;right:-60px;width:350px;height:350px;border-radius:50%;background:${BL};opacity:0.15;z-index:1;"></div>
+    <div style="position:absolute;top:0;left:0;right:0;bottom:0;display:flex;flex-direction:column;justify-content:center;padding:0 72px;z-index:5;">
+      <div style="font-weight:900;font-size:140px;color:${Y};line-height:0.85;letter-spacing:-0.04em;">1 in 3</div>
+      <div style="font-weight:700;font-size:36px;color:${WH};margin-top:12px;text-transform:uppercase;letter-spacing:-0.02em;">students</div>
+      <div style="width:60px;height:4px;background:${Y};margin:32px 0;border-radius:2px;"></div>
+      <p style="font-weight:400;font-size:30px;color:rgba(255,255,255,0.8);line-height:1.35;max-width:700px;">say campus feels disconnected at night.</p>
+      <p style="font-weight:500;font-size:26px;color:${BL};margin-top:28px;letter-spacing:-0.01em;">What if it didn't have to?</p>
+    </div>
+    ${bottomBar()}
+  </div>`;
+}
+
+// ═══════════════════════════════════════
+// PILLAR 2: WHAT SIDEXSIDE DOES (P5-P8)
+// ═══════════════════════════════════════
+
+function prod05() {
+  return `<div data-export-name="p05-connects-students" style="${imgBg('b2b-03-walking-together-side')}">
+    <div style="position:absolute;top:0;left:0;right:0;bottom:0;background:linear-gradient(180deg, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.65) 60%);z-index:1;"></div>
+    ${topBar()}
+    <div style="position:absolute;bottom:160px;left:0;right:0;padding:0 56px;z-index:5;">
+      <h1 style="font-weight:900;font-size:68px;line-height:0.95;letter-spacing:-0.03em;color:${WH};text-transform:uppercase;text-shadow:0 3px 12px rgba(0,0,0,0.4);margin:0;">
+        CONNECTS<br>STUDENTS<br>WALKING<br><span style="color:${Y};">THE SAME WAY</span>
+      </h1>
+      <p style="font-weight:500;font-size:24px;color:rgba(255,255,255,0.85);margin-top:24px;text-shadow:0 2px 8px rgba(0,0,0,0.4);">On-demand. Peer-to-peer. Right from campus.</p>
+    </div>
+    ${bottomBar()}
+  </div>`;
+}
+
+function prod06() {
+  return `<div data-export-name="p06-companionship" style="${imgBg('b2b-01-campus-golden-hour')}">
+    <div style="position:absolute;top:0;left:0;right:0;bottom:0;background:linear-gradient(180deg, rgba(0,0,0,0.05) 0%, rgba(0,0,0,0.6) 55%);z-index:1;"></div>
+    ${topBar()}
+    <div style="position:absolute;bottom:160px;left:0;right:0;padding:0 56px;z-index:5;">
+      <h1 style="font-weight:900;font-size:72px;line-height:0.95;letter-spacing:-0.03em;color:${WH};text-transform:uppercase;text-shadow:0 3px 12px rgba(0,0,0,0.4);margin:0;">
+        COMPANIONSHIP<br><span style="font-style:italic;font-weight:500;color:${Y};">on your schedule</span>
+      </h1>
+      <div style="display:flex;gap:16px;margin-top:28px;align-items:center;">
+        <span style="font-weight:700;font-size:20px;color:${Y};text-shadow:0 2px 8px rgba(0,0,0,0.4);">Drop a pin</span>
+        <span style="font-size:20px;color:rgba(255,255,255,0.5);">/</span>
+        <span style="font-weight:700;font-size:20px;color:${WH};text-shadow:0 2px 8px rgba(0,0,0,0.4);">Find a match</span>
+        <span style="font-size:20px;color:rgba(255,255,255,0.5);">/</span>
+        <span style="font-weight:700;font-size:20px;color:${Y};text-shadow:0 2px 8px rgba(0,0,0,0.4);">Walk together</span>
+      </div>
+    </div>
+    ${bottomBar()}
+  </div>`;
+}
+
+function prod07() {
+  return `<div data-export-name="p07-walk-home-together" style="${imgBg('b2b-06-night-campus-lights')}">
+    <div style="position:absolute;top:0;left:0;right:0;bottom:0;background:linear-gradient(180deg, rgba(0,0,0,0.15) 0%, rgba(0,0,0,0.6) 50%);z-index:1;"></div>
+    ${topBar()}
+    <div style="position:absolute;bottom:160px;left:0;right:0;padding:0 56px;z-index:5;">
+      <h1 style="font-weight:900;font-size:76px;line-height:0.95;letter-spacing:-0.03em;color:${WH};text-transform:uppercase;text-shadow:0 3px 12px rgba(0,0,0,0.5);margin:0;">
+        THE WALK<br>HOME,<br><span style="color:${Y};">TOGETHER</span>
+      </h1>
+      <p style="font-weight:500;font-size:22px;color:rgba(255,255,255,0.8);margin-top:24px;text-shadow:0 2px 8px rgba(0,0,0,0.4);">No tracking. No monitoring.<br>Just company when you want it.</p>
+    </div>
+    ${bottomBar()}
+  </div>`;
+}
+
+function prod08() {
+  return `<div data-export-name="p08-built-for-campuses" style="${imgBg('b2b-05-group-walking')}">
+    <div style="position:absolute;top:0;left:0;right:0;bottom:0;background:linear-gradient(180deg, rgba(0,0,0,0.05) 0%, rgba(0,0,0,0.65) 55%);z-index:1;"></div>
+    ${topBar()}
+    <div style="position:absolute;bottom:160px;left:0;right:0;padding:0 56px;z-index:5;">
+      <h1 style="font-weight:900;font-size:76px;line-height:0.95;letter-spacing:-0.03em;color:${WH};text-transform:uppercase;text-shadow:0 3px 12px rgba(0,0,0,0.4);margin:0;">
+        BUILT FOR<br><span style="color:${Y};">CAMPUSES</span>
+      </h1>
+      <p style="font-weight:500;font-size:22px;color:rgba(255,255,255,0.8);margin-top:24px;text-shadow:0 2px 8px rgba(0,0,0,0.4);max-width:700px;">Designed around how students actually move — between dorms, dining halls, and late-night libraries.</p>
+    </div>
+    ${bottomBar()}
+  </div>`;
+}
+
+// ═══════════════════════════════════════
+// PILLAR 3: UNIVERSITY PARTNERSHIP (P9-P11)
+// ═══════════════════════════════════════
+
+function partner09() {
+  return `<div data-export-name="p09-designed-for-your-campus" style="${imgBg('b2b-04-campus-buildings')}">
+    <div style="position:absolute;top:0;left:0;right:0;bottom:0;background:linear-gradient(180deg, rgba(0,0,0,0.15) 0%, rgba(0,0,0,0.65) 50%);z-index:1;"></div>
+    ${topBar()}
+    <div style="position:absolute;bottom:160px;left:0;right:0;padding:0 56px;z-index:5;">
+      <h1 style="font-weight:900;font-size:76px;line-height:0.95;letter-spacing:-0.03em;color:${WH};text-transform:uppercase;text-shadow:0 3px 12px rgba(0,0,0,0.5);margin:0;">
+        DESIGNED<br>FOR YOUR<br><span style="color:${Y};">CAMPUS</span>
+      </h1>
+      <p style="font-weight:500;font-size:22px;color:rgba(255,255,255,0.8);margin-top:24px;text-shadow:0 2px 8px rgba(0,0,0,0.4);max-width:700px;">Complementing escorts, shuttles, and wellness programs your university already offers.</p>
+    </div>
+    ${bottomBar()}
+  </div>`;
+}
+
+function partner10() {
+  return `<div data-export-name="p10-privacy-first" style="${solidBg(`linear-gradient(160deg,${BL} 0%,#034B8A 100%)`)}">
+    ${topBar()}
+    <div style="position:absolute;top:-80px;right:-80px;width:400px;height:400px;border-radius:50%;background:${WH};opacity:0.04;z-index:1;"></div>
+    <div style="position:absolute;top:0;left:0;right:0;bottom:0;display:flex;flex-direction:column;justify-content:center;padding:0 72px;z-index:5;">
+      <h1 style="font-weight:900;font-size:76px;line-height:0.95;letter-spacing:-0.03em;color:${WH};text-transform:uppercase;margin:0;">
+        PRIVACY-<br>FIRST<br><span style="color:${Y};">BY DESIGN</span>
+      </h1>
+      <div style="width:60px;height:4px;background:${Y};margin:36px 0;border-radius:2px;"></div>
+      <div style="display:flex;flex-direction:column;gap:20px;">
+        <div style="display:flex;align-items:center;gap:16px;">
+          <div style="width:8px;height:8px;border-radius:50%;background:${Y};flex-shrink:0;"></div>
+          <p style="font-weight:500;font-size:26px;color:rgba(255,255,255,0.85);margin:0;">No persistent tracking</p>
+        </div>
+        <div style="display:flex;align-items:center;gap:16px;">
+          <div style="width:8px;height:8px;border-radius:50%;background:${Y};flex-shrink:0;"></div>
+          <p style="font-weight:500;font-size:26px;color:rgba(255,255,255,0.85);margin:0;">No background monitoring</p>
+        </div>
+        <div style="display:flex;align-items:center;gap:16px;">
+          <div style="width:8px;height:8px;border-radius:50%;background:${Y};flex-shrink:0;"></div>
+          <p style="font-weight:500;font-size:26px;color:rgba(255,255,255,0.85);margin:0;">Walk history stays with students — and is deletable</p>
+        </div>
+      </div>
+    </div>
+    ${bottomBar()}
+  </div>`;
+}
+
+function partner11() {
+  return `<div data-export-name="p11-student-insight" style="${solidBg(BK)}">
+    ${topBar()}
+    <div style="position:absolute;bottom:-100px;left:-100px;width:450px;height:450px;border-radius:50%;background:${BL};opacity:0.12;z-index:1;"></div>
+    <div style="position:absolute;top:0;left:0;right:0;bottom:0;display:flex;flex-direction:column;justify-content:center;padding:0 72px;z-index:5;">
+      <h1 style="font-weight:900;font-size:64px;line-height:0.95;letter-spacing:-0.03em;color:${WH};text-transform:uppercase;margin:0;">
+        FROM<br><span style="color:${Y};">STUDENT<br>INSIGHT</span><br>TO CAMPUS<br>SOLUTION
+      </h1>
+      <div style="width:60px;height:4px;background:${Y};margin:36px 0;border-radius:2px;"></div>
+      <p style="font-weight:400;font-size:26px;color:rgba(255,255,255,0.75);line-height:1.4;max-width:700px;">Built by women who've walked those paths. Now bringing it to universities nationwide.</p>
+    </div>
+    ${bottomBar()}
+  </div>`;
+}
+
+// ═══════════════════════════════════════
+// PILLAR 4: MISSION & VALUES (P12-P14)
+// ═══════════════════════════════════════
+
+function mission12() {
+  return `<div data-export-name="p12-every-walk" style="${imgBg('b2b-07-library-exit')}">
+    <div style="position:absolute;top:0;left:0;right:0;bottom:0;background:linear-gradient(180deg, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.6) 50%);z-index:1;"></div>
+    ${topBar()}
+    <div style="position:absolute;bottom:160px;left:0;right:0;padding:0 56px;z-index:5;">
+      <h1 style="font-weight:900;font-size:68px;line-height:0.95;letter-spacing:-0.03em;color:${WH};text-transform:uppercase;text-shadow:0 3px 12px rgba(0,0,0,0.4);margin:0;">
+        EVERY WALK<br>IS BETTER<br>WITH SOMEONE<br><span style="color:${Y};">BESIDE YOU</span>
+      </h1>
+    </div>
+    ${bottomBar()}
+  </div>`;
+}
+
+function mission13() {
+  return `<div data-export-name="p13-friend-every-route" style="${imgBg('b2b-02-campus-pathway')}">
+    <div style="position:absolute;top:0;left:0;right:0;bottom:0;background:linear-gradient(180deg, rgba(0,0,0,0.15) 0%, rgba(0,0,0,0.55) 50%);z-index:1;"></div>
+    ${topBar()}
+    <div style="position:absolute;top:50%;left:0;right:0;transform:translateY(-50%);padding:0 56px;z-index:5;text-align:center;">
+      <h1 style="font-weight:900;font-size:64px;line-height:1.0;letter-spacing:-0.03em;color:${WH};text-shadow:0 3px 12px rgba(0,0,0,0.5);margin:0;">
+        It should feel like having a <span style="color:${Y};font-style:italic;">friend</span> on every route.
+      </h1>
+      <p style="font-weight:500;font-size:26px;color:rgba(255,255,255,0.85);margin-top:32px;text-shadow:0 2px 8px rgba(0,0,0,0.4);">That's what we're building.</p>
+    </div>
+    ${bottomBar()}
+  </div>`;
+}
+
+function mission14() {
+  return `<div data-export-name="p14-side-by-side" style="${imgBg('b2b-08-quad-aerial')}">
+    <div style="position:absolute;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.35);z-index:1;"></div>
+    <div style="position:absolute;top:0;left:0;right:0;bottom:0;display:flex;flex-direction:column;justify-content:center;align-items:center;z-index:5;">
+      <h1 style="font-weight:900;font-size:96px;line-height:0.92;letter-spacing:-0.04em;color:${WH};text-transform:uppercase;text-align:center;text-shadow:0 4px 16px rgba(0,0,0,0.5);margin:0;">
+        SIDE<br><span style="color:${Y};">BY</span><br>SIDE
+      </h1>
+      <div style="width:60px;height:4px;background:${Y};margin:36px 0;border-radius:2px;"></div>
+      <p style="font-weight:500;font-size:30px;color:rgba(255,255,255,0.85);text-shadow:0 2px 8px rgba(0,0,0,0.4);">The way it should be.</p>
+    </div>
+    ${bottomBar()}
+  </div>`;
+}
+
+// ═══════════════════════════════════════
+// SQUARE POSTS (1080×1080)
+// ═══════════════════════════════════════
+
+function sq01() {
+  return `<div data-export-name="sq-01-logo-lockup" style="${solidBg(`linear-gradient(160deg,${BL} 0%,${DB} 100%)`, 1080, 1080)}">
+    <div style="position:absolute;top:-80px;right:-80px;width:400px;height:400px;border-radius:50%;background:${Y};opacity:0.08;z-index:1;"></div>
+    <div style="position:absolute;bottom:-60px;left:-60px;width:300px;height:300px;border-radius:50%;background:${WH};opacity:0.04;z-index:1;"></div>
+    <div style="position:absolute;top:0;left:0;right:0;bottom:0;display:flex;flex-direction:column;justify-content:center;align-items:center;z-index:5;">
+      ${logoWhite(56)}
+      <div style="width:50px;height:3px;background:${Y};margin:28px 0;border-radius:2px;"></div>
+      <p style="font-weight:500;font-size:28px;color:rgba(255,255,255,0.7);letter-spacing:0.15em;text-transform:uppercase;">walk together</p>
+    </div>
+  </div>`;
+}
+
+function sq02() {
+  return `<div data-export-name="sq-02-how-it-works" style="${solidBg(WH, 1080, 1080)}">
+    <div style="position:absolute;top:0;left:0;right:0;bottom:0;display:flex;flex-direction:column;justify-content:center;padding:80px 80px;z-index:5;">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:48px;">
+        ${logoDark(32)}
+        <span style="font-family:${F};font-weight:600;font-size:16px;color:rgba(0,0,0,0.4);">How it works</span>
+      </div>
+      <div style="display:flex;align-items:flex-start;gap:40px;">
+        <div style="flex:1;text-align:center;">
+          <div style="width:100px;height:100px;border-radius:24px;background:${BL};display:flex;align-items:center;justify-content:center;margin:0 auto 20px;font-size:44px;">
+            <span style="color:${WH};">&#x1F4CD;</span>
+          </div>
+          <h3 style="font-weight:800;font-size:24px;color:${BK};margin:0 0 8px;letter-spacing:-0.02em;">Drop a pin</h3>
+          <p style="font-weight:400;font-size:17px;color:rgba(0,0,0,0.5);margin:0;line-height:1.4;">Share where you're heading</p>
+        </div>
+        <div style="font-size:32px;color:${BL};margin-top:40px;font-weight:300;">&#x2192;</div>
+        <div style="flex:1;text-align:center;">
+          <div style="width:100px;height:100px;border-radius:24px;background:${Y};display:flex;align-items:center;justify-content:center;margin:0 auto 20px;font-size:44px;">
+            <span style="color:${BK};">&#x1F91D;</span>
+          </div>
+          <h3 style="font-weight:800;font-size:24px;color:${BK};margin:0 0 8px;letter-spacing:-0.02em;">Find a match</h3>
+          <p style="font-weight:400;font-size:17px;color:rgba(0,0,0,0.5);margin:0;line-height:1.4;">Connect with someone nearby</p>
+        </div>
+        <div style="font-size:32px;color:${BL};margin-top:40px;font-weight:300;">&#x2192;</div>
+        <div style="flex:1;text-align:center;">
+          <div style="width:100px;height:100px;border-radius:24px;background:${BK};display:flex;align-items:center;justify-content:center;margin:0 auto 20px;font-size:44px;">
+            <span style="color:${Y};">&#x1F6B6;</span>
+          </div>
+          <h3 style="font-weight:800;font-size:24px;color:${BK};margin:0 0 8px;letter-spacing:-0.02em;">Walk together</h3>
+          <p style="font-weight:400;font-size:17px;color:rgba(0,0,0,0.5);margin:0;line-height:1.4;">Real-time peer companionship</p>
+        </div>
+      </div>
+      <div style="text-align:center;margin-top:48px;">
+        <p style="font-weight:600;font-size:18px;color:rgba(0,0,0,0.4);">sidexside.ai</p>
+      </div>
+    </div>
+  </div>`;
+}
+
+function sq03() {
+  return `<div data-export-name="sq-03-stat-highlight" style="${solidBg(`linear-gradient(160deg,#003D73 0%,${DB} 100%)`, 1080, 1080)}">
+    ${topBar()}
+    <div style="position:absolute;top:-60px;right:-60px;width:350px;height:350px;border-radius:50%;background:${Y};opacity:0.08;z-index:1;"></div>
+    <div style="position:absolute;top:0;left:0;right:0;bottom:0;display:flex;flex-direction:column;justify-content:center;align-items:center;padding:80px 72px;z-index:5;">
+      <div style="font-weight:900;font-size:160px;color:${Y};line-height:0.85;letter-spacing:-0.05em;">73%</div>
+      <p style="font-weight:400;font-size:28px;color:${WH};text-align:center;margin:28px 0 0;line-height:1.4;max-width:650px;">of women want a <span style="font-weight:700;">walking companion</span> on campus.</p>
+      <div style="width:50px;height:3px;background:${Y};margin:28px 0;border-radius:2px;"></div>
+      <p style="font-weight:600;font-size:20px;color:rgba(255,255,255,0.6);text-align:center;">sidexside connects them.</p>
+    </div>
+    ${bottomBar()}
+  </div>`;
+}
+
+// ═══════════════════════════════════════
+// CAROUSEL (5 slides, 1080×1080)
+// How sidexside works on your campus
+// ═══════════════════════════════════════
+
+function dots(active, total=5) {
+  let d='';
+  for(let i=1;i<=total;i++){
+    const w=i===active?'24px':'8px';
+    const bg=i===active?WH:'rgba(255,255,255,0.3)';
+    d+=`<div style="width:${w};height:8px;border-radius:4px;background:${bg};"></div>`;
+  }
+  return `<div style="position:absolute;top:32px;left:50%;transform:translateX(-50%);display:flex;gap:8px;z-index:10;">${d}</div>`;
+}
+
+function cSlide1() {
+  return `<div data-export-name="carousel-01-cover" style="${solidBg(`linear-gradient(160deg,${BL} 0%,${DB} 100%)`, 1080, 1080)}">
+    ${dots(1)}
+    <div style="position:absolute;top:-80px;right:-80px;width:400px;height:400px;border-radius:50%;background:${Y};opacity:0.08;z-index:1;"></div>
+    <div style="position:absolute;bottom:-60px;left:-60px;width:300px;height:300px;border-radius:50%;background:${WH};opacity:0.04;z-index:1;"></div>
+    <div style="position:absolute;top:0;left:0;right:0;bottom:0;display:flex;flex-direction:column;justify-content:center;padding:80px 72px;z-index:5;">
+      <h2 style="font-weight:900;font-size:68px;line-height:1.0;letter-spacing:-0.04em;color:${WH};text-transform:uppercase;margin:0;">HOW<br>SIDE<span style="color:${Y};">X</span>SIDE<br>WORKS ON<br>YOUR CAMPUS</h2>
+    </div>
+    <div style="position:absolute;bottom:32px;left:48px;right:48px;display:flex;justify-content:space-between;align-items:center;z-index:10;">
+      ${logoWhite()}<span style="font-family:${F};font-weight:600;font-size:14px;color:rgba(255,255,255,0.6);">sidexside.ai</span>
+    </div>
+  </div>`;
+}
+
+function cStep(num, step, title, desc) {
+  const bgs = ['', '#004488', '#005599', '#003D73'];
+  const bg = bgs[step];
+  return `<div data-export-name="carousel-0${num}-step-${step}" style="${solidBg(bg, 1080, 1080)}">
+    ${dots(num)}
+    <div style="position:absolute;top:-60px;right:-60px;width:300px;height:300px;border-radius:50%;background:${Y};opacity:0.06;z-index:1;"></div>
+    <div style="position:absolute;top:0;left:0;right:0;bottom:0;display:flex;flex-direction:column;justify-content:center;padding:80px 72px;z-index:5;">
+      <div style="font-weight:900;font-size:120px;color:${WH};line-height:0.85;letter-spacing:-0.05em;opacity:0.08;">${String(step).padStart(2,'0')}</div>
+      <h2 style="font-weight:900;font-size:56px;color:${WH};margin:-30px 0 20px;line-height:1.0;letter-spacing:-0.03em;text-transform:uppercase;">${title}</h2>
+      <p style="font-weight:400;font-size:26px;color:rgba(255,255,255,0.75);margin:0;line-height:1.4;max-width:700px;">${desc}</p>
+    </div>
+    <div style="position:absolute;bottom:32px;left:48px;right:48px;display:flex;justify-content:space-between;align-items:center;z-index:10;">
+      ${logoWhite()}<span style="font-family:${F};font-weight:600;font-size:14px;color:rgba(255,255,255,0.5);">sidexside.ai</span>
+    </div>
+  </div>`;
+}
+
+function cSlide5() {
+  return `<div data-export-name="carousel-05-cta" style="${solidBg(`linear-gradient(160deg,${BL} 0%,#034B8A 100%)`, 1080, 1080)}">
+    ${dots(5)}
+    <div style="position:absolute;top:-60px;right:-60px;width:350px;height:350px;border-radius:50%;background:${Y};opacity:0.08;z-index:1;"></div>
+    <div style="position:absolute;top:0;left:0;right:0;bottom:0;display:flex;flex-direction:column;justify-content:center;padding:80px 72px;z-index:5;">
+      <h2 style="font-weight:900;font-size:72px;line-height:1.0;letter-spacing:-0.04em;color:${WH};text-transform:uppercase;margin:0 0 24px;">BRING<br>SIDEXSIDE<br>TO <span style="background:${Y};padding:0 12px;border-radius:8px;color:${BK};">YOUR</span><br>CAMPUS</h2>
+      <p style="font-weight:400;font-size:24px;color:rgba(255,255,255,0.7);margin:0 0 36px;line-height:1.5;max-width:85%;">Peer-to-peer companionship that complements your existing campus services.</p>
+      <div style="display:inline-block;background:${Y};color:${BK};font-family:${F};font-weight:700;font-size:22px;padding:18px 40px;border-radius:100px;letter-spacing:-0.02em;align-self:flex-start;">Learn more at sidexside.ai</div>
+    </div>
+    <div style="position:absolute;bottom:32px;left:48px;right:48px;display:flex;justify-content:space-between;align-items:center;z-index:10;">
+      ${logoWhite()}<span style="font-family:${F};font-weight:600;font-size:14px;color:rgba(255,255,255,0.5);">sidexside.ai</span>
+    </div>
+  </div>`;
+}
+
+// ═══════════════════════════════════════
+// RENDER & EXPORT
+// ═══════════════════════════════════════
+
+function renderCard(html, title, w, h, container) {
+  const pw=Math.round(w*S), ph=Math.round(h*S);
+  const card=document.createElement('div');
+  card.className='card';
+  card.style.width=(pw+2)+'px';
+  card.innerHTML=`
+    <div class="card-preview" style="width:${pw}px;height:${ph}px;">
+      <div style="transform:scale(${S});transform-origin:top left;width:${w}px;height:${h}px;">${html}</div>
+    </div>
+    <div class="card-bar">
+      <span>${title}</span>
+      <button class="export-btn" onclick="exportSingle(this)">Export</button>
+    </div>`;
+  container.appendChild(card);
+}
+
+async function doExport(el) {
+  const name=el.getAttribute('data-export-name');
+  const cont=document.createElement('div');
+  cont.style.cssText='position:fixed;top:0;left:0;z-index:-9999;opacity:0;pointer-events:none;';
+  document.body.appendChild(cont);
+  const clone=el.cloneNode(true);
+  clone.style.transform='none';
+  cont.appendChild(clone);
+  await new Promise(r=>setTimeout(r,500));
+  try {
+    const w=parseInt(clone.style.width), h=parseInt(clone.style.height);
+    const canvas=await html2canvas(clone,{scale:2,useCORS:true,backgroundColor:null,width:w,height:h,windowWidth:w+100,windowHeight:h+100});
+    const link=document.createElement('a');
+    link.download=name+'.png';
+    link.href=canvas.toDataURL('image/png');
+    link.click();
+  } catch(e){console.error(e);}
+  document.body.removeChild(cont);
+}
+
+async function exportSingle(btn) {
+  const el=btn.closest('.card').querySelector('[data-export-name]');
+  if(!el) return;
+  btn.textContent='...';
+  await doExport(el);
+  btn.textContent='Export';
+}
+
+async function exportAll() {
+  const els=document.querySelectorAll('[data-export-name]');
+  const st=document.getElementById('status');
+  for(let i=0;i<els.length;i++){
+    st.textContent=`Exporting ${i+1}/${els.length}...`;
+    await doExport(els[i]);
+    await new Promise(r=>setTimeout(r,700));
+  }
+  st.textContent=`Done! ${els.length} PNGs exported.`;
+  setTimeout(()=>{st.textContent='';},4000);
+}
+
+window.addEventListener('DOMContentLoaded',()=>{
+  const statG=document.getElementById('stat-grid');
+  const prodG=document.getElementById('product-grid');
+  const partG=document.getElementById('partner-grid');
+  const missG=document.getElementById('mission-grid');
+  const sg=document.getElementById('square-grid');
+  const cr=document.getElementById('carousel-row');
+
+  // Pillar 1: Stats
+  renderCard(stat01(),'P1: 73% Want Company',1080,1350,statG);
+  renderCard(stat02(),'P2: 52% Disconnected',1080,1350,statG);
+  renderCard(stat03(),'P3: Retention & Belonging',1080,1350,statG);
+  renderCard(stat04(),'P4: 1 in 3 Students',1080,1350,statG);
+
+  // Pillar 2: Product
+  renderCard(prod05(),'P5: Connects Students',1080,1350,prodG);
+  renderCard(prod06(),'P6: Companionship',1080,1350,prodG);
+  renderCard(prod07(),'P7: Walk Home Together',1080,1350,prodG);
+  renderCard(prod08(),'P8: Built For Campuses',1080,1350,prodG);
+
+  // Pillar 3: Partnership
+  renderCard(partner09(),'P9: Designed For Your Campus',1080,1350,partG);
+  renderCard(partner10(),'P10: Privacy-First',1080,1350,partG);
+  renderCard(partner11(),'P11: Student Insight to Solution',1080,1350,partG);
+
+  // Pillar 4: Mission
+  renderCard(mission12(),'P12: Every Walk Is Better',1080,1350,missG);
+  renderCard(mission13(),'P13: Friend On Every Route',1080,1350,missG);
+  renderCard(mission14(),'P14: Side By Side',1080,1350,missG);
+
+  // Square Posts
+  renderCard(sq01(),'S1: Logo Lockup',1080,1080,sg);
+  renderCard(sq02(),'S2: How It Works',1080,1080,sg);
+  renderCard(sq03(),'S3: 73% Stat Highlight',1080,1080,sg);
+
+  // Carousel
+  renderCard(cSlide1(),'Slide 1: Cover',1080,1080,cr);
+  renderCard(cStep(2,1,'Students drop a pin','When a student wants company for their walk, they drop a pin on campus. See who\'s heading the same direction in real-time.'),'Slide 2: Drop Pin',1080,1080,cr);
+  renderCard(cStep(3,2,'We find a match','sidexside connects them with another student heading the same way. Quick, simple, peer-to-peer.'),'Slide 3: Find Match',1080,1080,cr);
+  renderCard(cStep(4,3,'They walk together','Real-time, peer-to-peer companionship. No persistent tracking. No background monitoring.'),'Slide 4: Walk Together',1080,1080,cr);
+  renderCard(cSlide5(),'Slide 5: CTA',1080,1080,cr);
+});
+</script>
+</body>
+</html>
