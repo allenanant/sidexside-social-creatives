@@ -13,7 +13,7 @@ os.makedirs(OUT_DIR, exist_ok=True)
 PROMPTS = {
     "b2b-01-campus-golden-hour": "Professional editorial photograph: Two young diverse college-age women walking together on a beautiful tree-lined university campus pathway at golden hour. Shot from behind at medium distance, showing the full campus environment. They carry backpacks and walk side by side naturally. Warm golden light filters through the trees. The campus is lush and inviting. Shot on 35mm film, slight grain. Professional university marketing style photography. The mood is warm, connected, and aspirational.",
 
-    "b2b-02-campus-pathway": "Professional architectural photograph: Wide shot of a beautiful ivy-league style university campus pathway at dusk. Warm pathway lights glow along a tree-lined walkway. A few students visible in the distance walking in pairs. Historic campus buildings frame the scene. The lighting is warm and inviting — blue hour with warm accent lights. Professional editorial style. The mood is prestigious, welcoming, and institutional.",
+    "b2b-02-campus-pathway": "Professional architectural photograph: Wide shot of a beautiful ivy-league style university campus pathway at dusk. Warm pathway lights glow along a tree-lined walkway. A few students visible in the distance walking in pairs. Historic campus buildings frame the scene. The lighting is warm and inviting -- blue hour with warm accent lights. Professional editorial style. The mood is prestigious, welcoming, and institutional.",
 
     "b2b-03-walking-together-side": "Professional editorial photograph: Two young diverse college-age women (one Black, one Asian) walking side by side on a university campus sidewalk, talking and smiling naturally. Shot from the side at waist level with shallow depth of field. Blue sky visible, campus buildings softly blurred in background. Golden hour warm light. They wear casual college clothes. The mood is natural, connected, and authentic. Professional university brochure style photography.",
 
@@ -26,6 +26,14 @@ PROMPTS = {
     "b2b-07-library-exit": "Professional editorial photograph: Two young diverse college women exiting a grand university library building at dusk, walking together down stone steps. They carry backpacks and books. Warm dusk lighting with the library's interior glowing behind them. The architecture is impressive and collegiate. Shot from a lower angle to emphasize the building. 35mm film style. The mood is academic, connected, and aspirational.",
 
     "b2b-08-quad-aerial": "Professional aerial photograph: Bird's eye view of a beautiful university quadrangle with crisscrossing pathways, green lawns, mature trees, and groups of students walking in pairs and small groups along the paths. The pattern of pathways creates a natural geometric design. Warm afternoon light casts interesting shadows. The campus looks vibrant and alive. Clean, crisp professional drone photography style.",
+
+    "b2b-09-entering-campus": "Professional editorial photograph: Two diverse college-age women entering through grand wrought-iron university gates at golden hour. The gates are flanked by brick pillars. They carry backpacks and walk confidently together. The university campus is visible through the gates - green lawns, trees, buildings. Warm golden sunlight from behind creates a slight lens flare. Shot on 35mm film. The mood is welcoming, aspirational, and empowering.",
+
+    "b2b-10-campus-steps": "Professional editorial photograph: A diverse group of four college-age women sitting together on wide stone steps of a university building, talking and laughing. The architecture is grand and collegiate. Warm afternoon light. They have backpacks and books around them. One is looking at her phone. The mood is social, connected, and natural. Shot in editorial university lifestyle style. 35mm film grain.",
+
+    "b2b-11-night-walking-pair": "Professional cinematic photograph: Two young diverse women walking together on a well-lit university campus sidewalk at night. Warm streetlamp glow illuminates them. They are talking and smiling. One gestures while speaking. Campus buildings with glowing windows in background. The mood is warm, connected, and comforting despite being nighttime. Editorial photography style with slight film grain.",
+
+    "b2b-12-campus-crosswalk": "Professional editorial photograph: Two young diverse college-age women crossing a campus road together at a crosswalk, shot from a dynamic low angle. Blue sky above. University buildings visible. They walk confidently side by side. Warm golden hour light. The image feels energetic and purposeful. 35mm film photography style. University marketing aesthetic.",
 }
 
 def generate_image(name, prompt):

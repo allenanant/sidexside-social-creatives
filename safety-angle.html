@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>sidexside — Safety Angle Meta Ad Creatives</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500;1,600;1,700;1,800&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{-webkit-font-smoothing:antialiased}
+  body{font-family:'Inter',system-ui,sans-serif;background:#F8F8F8;color:#050505}
+  header{position:sticky;top:0;z-index:100;background:rgba(255,255,255,0.92);backdrop-filter:blur(20px);border-bottom:1px solid #E5E5E5;padding:18px 40px;display:flex;justify-content:space-between;align-items:center}
+  header h1{font-size:22px;font-weight:800;letter-spacing:-1px;display:flex;align-items:center;gap:2px}
+  header h1 .x{color:#BBB}
+  header h1 .sub{font-weight:500;color:#999;margin-left:16px;font-size:14px;letter-spacing:0}
+  .export-all{background:#000;color:#fff;border:none;border-radius:100px;padding:12px 28px;font-weight:700;font-size:14px;cursor:pointer;font-family:'Inter',sans-serif;letter-spacing:-0.02em}
+  .export-all:hover{background:#333}
+  main{padding:40px;max-width:1400px;margin:0 auto}
+  section{margin-bottom:56px}
+  section h2{font-size:13px;font-weight:700;color:#999;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:20px}
+  .grid{display:flex;flex-wrap:wrap;gap:20px}
+  .card{background:#fff;border-radius:20px;border:1px solid #E5E5E5;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,0.04)}
+  .card-preview{overflow:hidden;position:relative}
+  .card-bar{padding:12px 16px;display:flex;justify-content:space-between;align-items:center;border-top:1px solid #F0F0F0}
+  .card-bar span{font-size:13px;font-weight:600;color:#333}
+  .export-btn{background:#000;color:#fff;border:none;border-radius:100px;padding:6px 16px;font-weight:600;font-size:12px;cursor:pointer;font-family:'Inter',sans-serif}
+  .export-btn:hover{background:#333}
+  #status{font-size:13px;color:#000;font-weight:600;margin-right:16px}
+  footer{border-top:1px solid #E5E5E5;padding:24px 40px;text-align:center;color:#999;font-size:13px}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>side<span class="x">x</span>side<span class="sub">Safety Angle — Meta Ad Creatives</span></h1>
+  <div style="display:flex;align-items:center">
+    <span id="status"></span>
+    <button class="export-all" onclick="exportAll()">Export All PNGs</button>
+  </div>
+</header>
+
+<main>
+  <section>
+    <h2>Section 1 — The Service Gap (Portrait 1080 x 1350)</h2>
+    <div class="grid" id="gap-grid"></div>
+  </section>
+  <section>
+    <h2>Section 2 — The After-Dark Problem (Portrait 1080 x 1350)</h2>
+    <div class="grid" id="dark-grid"></div>
+  </section>
+  <section>
+    <h2>Section 3 — Proactive > Reactive (Portrait 1080 x 1350)</h2>
+    <div class="grid" id="proactive-grid"></div>
+  </section>
+  <section>
+    <h2>Section 4 — Ready-to-Paste Meta Ads (Square 1080 x 1080)</h2>
+    <div class="grid" id="meta-grid"></div>
+  </section>
+</main>
+
+<footer>sidexside Safety Angle — Meta Ad Creatives — 2026</footer>
+
+<script>
+const S = 0.33;
+const Y = '#E6FF00';
+const BK = '#000000';
+const WH = '#FFFFFF';
+const BL = '#076CC7';
+const DB = '#0558A3';
+const F = "'Inter',system-ui,sans-serif";
+
+// ═══════════════════════════════════════
+// SHARED COMPONENTS
+// ═══════════════════════════════════════
+
+function logoWhite(size=28) {
+  return `<div style="font-family:${F};font-weight:800;font-size:${size}px;color:${WH};letter-spacing:-1px;display:flex;align-items:center;gap:1px;text-shadow:0 2px 8px rgba(0,0,0,0.3);">side<span style="color:${Y};">x</span>side</div>`;
+}
+
+function logoDark(size=28) {
+  return `<div style="font-family:${F};font-weight:800;font-size:${size}px;color:${BK};letter-spacing:-1px;display:flex;align-items:center;gap:1px;">side<span style="color:${BL};">x</span>side</div>`;
+}
+
+function topBar(light=true) {
+  const logo = light ? logoWhite() : logoDark();
+  const urlColor = light ? WH : BK;
+  const urlOpacity = light ? '0.8' : '0.5';
+  const shadow = light ? 'text-shadow:0 2px 6px rgba(0,0,0,0.3);' : '';
+  return `<div style="position:absolute;top:0;left:0;right:0;display:flex;justify-content:space-between;align-items:center;padding:40px 48px;z-index:10;">
+    ${logo}
+    <div style="font-family:${F};font-weight:600;font-size:16px;color:${urlColor};letter-spacing:-0.01em;opacity:${urlOpacity};${shadow}">sidexside.ai</div>
+  </div>`;
+}
+
+function bottomBar(light=true) {
+  const logo = light ? logoWhite() : logoDark();
+  const urlColor = light ? WH : BK;
+  const urlOpacity = light ? '0.8' : '0.5';
+  const shadow = light ? 'text-shadow:0 2px 6px rgba(0,0,0,0.3);' : '';
+  return `<div style="position:absolute;bottom:0;left:0;right:0;display:flex;justify-content:space-between;align-items:center;padding:40px 48px;z-index:10;">
+    ${logo}
+    <div style="font-family:${F};font-weight:600;font-size:16px;color:${urlColor};letter-spacing:-0.01em;opacity:${urlOpacity};${shadow}">sidexside.ai</div>
+  </div>`;
+}
+
+function imgBg(name, w=1080, h=1350) {
+  return `background:url('images/${name}.png') center/cover no-repeat;width:${w}px;height:${h}px;position:relative;overflow:hidden;font-family:${F};`;
+}
+
+function pillBtn(text, bg=WH, color=BK) {
+  return `<div style="display:inline-block;background:${bg};color:${color};font-family:${F};font-weight:700;font-size:20px;padding:16px 36px;border-radius:100px;letter-spacing:-0.01em;">${text}</div>`;
+}
+
+// ═══════════════════════════════════════
+// SECTION 1: THE SERVICE GAP (Creatives 1-4)
+// ═══════════════════════════════════════
+
+function creative01() {
+  return `<div data-export-name="safety-01-escort-gap" style="${imgBg('b2b-06-night-campus-lights')}">
+    <div style="position:absolute;top:0;left:0;right:0;bottom:0;background:linear-gradient(180deg, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.75) 55%);z-index:1;"></div>
+    ${topBar()}
+    <div style="position:absolute;bottom:180px;left:0;right:0;padding:0 56px;z-index:5;">
+      <h1 style="font-weight:900;font-size:64px;line-height:0.95;letter-spacing:-0.03em;color:${WH};text-transform:uppercase;text-shadow:0 3px 12px rgba(0,0,0,0.4);margin:0;">
+        YOUR ESCORT STOPS<br>AT MIDNIGHT.<br><br><span style="color:${Y};">YOUR STUDENTS<br>DON'T.</span>
+      </h1>
+      <p style="font-weight:500;font-size:22px;color:rgba(255,255,255,0.85);margin-top:28px;text-shadow:0 2px 8px rgba(0,0,0,0.4);max-width:700px;line-height:1.4;">sidexside fills what's left — matching women with women heading the same direction. Peer-to-peer. On-demand. No new infrastructure.</p>
+      <div style="margin-top:32px;">${pillBtn('Book a Demo')}</div>
+    </div>
+    ${bottomBar()}
+  </div>`;
+}
+
+function creative02() {
+  return `<div data-export-name="safety-02-shuttle-gap" style="${imgBg('b2b-08-quad-aerial')}">
+    <div style="position:absolute;top:0;left:0;right:0;bottom:0;background:linear-gradient(180deg, rgba(0,0,0,0.15) 0%, rgba(0,0,0,0.7) 60%);z-index:1;"></div>
+    ${topBar()}
+    <div style="position:absolute;bottom:180px;left:0;right:0;padding:0 56px;z-index:5;">
+      <h1 style="font-weight:900;font-size:64px;line-height:0.95;letter-spacing:-0.03em;color:${WH};text-transform:uppercase;text-shadow:0 3px 12px rgba(0,0,0,0.4);margin:0;">
+        THE SHUTTLE<br>COVERS 4 STOPS.<br><br><span style="color:${Y};">YOUR STUDENTS<br>WALK EVERYWHERE.</span>
+      </h1>
+      <p style="font-weight:500;font-size:22px;color:rgba(255,255,255,0.85);margin-top:28px;text-shadow:0 2px 8px rgba(0,0,0,0.4);max-width:700px;line-height:1.4;">Fixed routes can't solve a moving problem. sidexside goes where your students go.</p>
+      <div style="margin-top:32px;">${pillBtn('Book a Demo')}</div>
+    </div>
+    ${bottomBar()}
+  </div>`;
+}
+
+function creative03() {
+  return `<div data-export-name="safety-03-blue-light-gap" style="${imgBg('b2b-02-campus-pathway')}">
+    <div style="position:absolute;top:0;left:0;right:0;bottom:0;background:linear-gradient(170deg, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.75) 60%);z-index:1;"></div>
+    ${topBar()}
+    <div style="position:absolute;bottom:180px;left:0;right:0;padding:0 56px;z-index:5;">
+      <h1 style="font-weight:900;font-size:60px;line-height:0.95;letter-spacing:-0.03em;color:${WH};text-transform:uppercase;text-shadow:0 3px 12px rgba(0,0,0,0.4);margin:0;">
+        BLUE LIGHT PHONES<br>DON'T WALK<br>STUDENTS HOME.<br><br><span style="color:${Y};">SIDEXSIDE DOES.</span>
+      </h1>
+      <p style="font-weight:500;font-size:22px;color:rgba(255,255,255,0.85);margin-top:28px;text-shadow:0 2px 8px rgba(0,0,0,0.4);max-width:700px;line-height:1.4;">The mobile peer layer your campus is missing.</p>
+      <div style="margin-top:32px;">${pillBtn('Book a Demo')}</div>
+    </div>
+    ${bottomBar()}
+  </div>`;
+}
+
+function creative04() {
+  return `<div data-export-name="safety-04-infrastructure-gap" style="${imgBg('b2b-04-campus-buildings')}">
+    <div style="position:absolute;top:0;left:0;right:0;bottom:0;background:linear-gradient(190deg, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.72) 55%);z-index:1;"></div>
+    ${topBar()}
+    <div style="position:absolute;bottom:180px;left:0;right:0;padding:0 56px;z-index:5;">
+      <h1 style="font-weight:900;font-size:58px;line-height:0.95;letter-spacing:-0.03em;color:${WH};text-transform:uppercase;text-shadow:0 3px 12px rgba(0,0,0,0.4);margin:0;">
+        GREAT<br>INFRASTRUCTURE.<br>STUDENTS STILL<br>WALK ALONE.<br><br><span style="color:${Y};">THE PEER LAYER<br>IS MISSING.</span>
+      </h1>
+      <p style="font-weight:500;font-size:22px;color:rgba(255,255,255,0.85);margin-top:28px;text-shadow:0 2px 8px rgba(0,0,0,0.4);max-width:700px;line-height:1.4;">sidexside connects women heading the same direction. Complements everything you already have.</p>
+      <div style="margin-top:32px;">${pillBtn('Book a Demo')}</div>
+    </div>
+    ${bottomBar()}
+  </div>`;
+}
+
+// ═══════════════════════════════════════
+// SECTION 2: THE AFTER-DARK PROBLEM (Creatives 5-9)
+// ═══════════════════════════════════════
+
+function creative05() {
+  return `<div data-export-name="safety-05-day-vs-night" style="${imgBg('b2b-01-campus-golden-hour')}">
+    <div style="position:absolute;top:0;left:0;right:0;bottom:0;background:linear-gradient(180deg, rgba(0,0,0,0.05) 0%, rgba(0,0,0,0.7) 55%);z-index:1;"></div>
+    ${topBar()}
+    <div style="position:absolute;bottom:180px;left:0;right:0;padding:0 56px;z-index:5;">
+      <h1 style="font-weight:900;font-size:64px;line-height:0.95;letter-spacing:-0.03em;color:${WH};text-transform:uppercase;text-shadow:0 3px 12px rgba(0,0,0,0.4);margin:0;">
+        YOUR CAMPUS FEELS<br>CONNECTED AT NOON.<br><br><span style="color:${Y};">WHAT ABOUT 10PM?</span>
+      </h1>
+      <p style="font-weight:500;font-size:22px;color:rgba(255,255,255,0.85);margin-top:28px;text-shadow:0 2px 8px rgba(0,0,0,0.4);max-width:700px;line-height:1.4;">sidexside turns solo walks into shared ones — matching peers heading the same way.</p>
+      <div style="margin-top:32px;">${pillBtn('Book a Demo')}</div>
+    </div>
+    ${bottomBar()}
+  </div>`;
+}
+
+function creative06() {
+  return `<div data-export-name="safety-06-disconnection" style="${imgBg('03-night-campus')}">
+    <div style="position:absolute;top:0;left:0;right:0;bottom:0;background:linear-gradient(180deg, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.8) 60%);z-index:1;"></div>
+    ${topBar()}
+    <div style="position:absolute;bottom:180px;left:0;right:0;padding:0 56px;z-index:5;">
+      <div style="font-weight:900;font-size:160px;color:${Y};line-height:0.85;letter-spacing:-0.05em;text-shadow:0 4px 16px rgba(0,0,0,0.5);">52%</div>
+      <h1 style="font-weight:900;font-size:48px;line-height:0.95;letter-spacing:-0.03em;color:${WH};text-transform:uppercase;text-shadow:0 3px 12px rgba(0,0,0,0.4);margin:12px 0 0;">
+        OF YOUR STUDENTS<br>FEEL DISCONNECTED<br>AFTER DARK.
+      </h1>
+      <p style="font-weight:500;font-size:22px;color:rgba(255,255,255,0.85);margin-top:28px;text-shadow:0 2px 8px rgba(0,0,0,0.4);max-width:700px;line-height:1.4;">That's a retention problem. sidexside builds peer connection — one walk at a time.</p>
+      <div style="margin-top:32px;">${pillBtn('Book a Demo')}</div>
+    </div>
+    ${bottomBar()}
+  </div>`;
+}
+
+function creative07() {
+  return `<div data-export-name="safety-07-solo-walks" style="${imgBg('b2b-07-library-exit')}">
+    <div style="position:absolute;top:0;left:0;right:0;bottom:0;background:linear-gradient(175deg, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.72) 55%);z-index:1;"></div>
+    ${topBar()}
+    <div style="position:absolute;bottom:180px;left:0;right:0;padding:0 56px;z-index:5;">
+      <h1 style="font-weight:900;font-size:56px;line-height:0.95;letter-spacing:-0.03em;color:${WH};text-transform:uppercase;text-shadow:0 3px 12px rgba(0,0,0,0.4);margin:0;">
+        THE WALK BETWEEN<br>THE LIBRARY AND<br>THE DORM SHOULDN'T<br>FEEL <span style="color:${Y};">LONELY.</span>
+      </h1>
+      <p style="font-weight:500;font-size:22px;color:rgba(255,255,255,0.85);margin-top:28px;text-shadow:0 2px 8px rgba(0,0,0,0.4);max-width:700px;line-height:1.4;">For 73% of women on your campus, it does. sidexside changes that.</p>
+      <div style="margin-top:32px;">${pillBtn('Book a Demo')}</div>
+    </div>
+    ${bottomBar()}
+  </div>`;
+}
+
+function creative08() {
+  return `<div data-export-name="safety-08-rerouting" style="${imgBg('b2b-09-entering-campus')}">
+    <div style="position:absolute;top:0;left:0;right:0;bottom:0;background:linear-gradient(185deg, rgba(0,0,0,0.15) 0%, rgba(0,0,0,0.75) 55%);z-index:1;"></div>
+    ${topBar()}
+    <div style="position:absolute;bottom:180px;left:0;right:0;padding:0 56px;z-index:5;">
+      <div style="font-weight:900;font-size:160px;color:${Y};line-height:0.85;letter-spacing:-0.05em;text-shadow:0 4px 16px rgba(0,0,0,0.5);">67%</div>
+      <h1 style="font-weight:900;font-size:48px;line-height:0.95;letter-spacing:-0.03em;color:${WH};text-transform:uppercase;text-shadow:0 3px 12px rgba(0,0,0,0.4);margin:12px 0 0;">
+        OF WOMEN HAVE<br>CHANGED THEIR ROUTE<br>TO AVOID WALKING<br>ALONE.
+      </h1>
+      <p style="font-weight:500;font-size:22px;color:rgba(255,255,255,0.85);margin-top:28px;text-shadow:0 2px 8px rgba(0,0,0,0.4);max-width:700px;line-height:1.4;">What if they didn't have to? sidexside connects women heading the same direction.</p>
+      <div style="margin-top:32px;">${pillBtn('Book a Demo')}</div>
+    </div>
+    ${bottomBar()}
+  </div>`;
+}
+
+function creative09() {
+  return `<div data-export-name="safety-09-isolation" style="${imgBg('b2b-03-walking-together-side')}">
+    <div style="position:absolute;top:0;left:0;right:0;bottom:0;background:linear-gradient(180deg, rgba(0,0,0,0.05) 0%, rgba(0,0,0,0.7) 55%);z-index:1;"></div>
+    ${topBar()}
+    <div style="position:absolute;bottom:180px;left:0;right:0;padding:0 56px;z-index:5;">
+      <div style="font-weight:900;font-size:130px;color:${Y};line-height:0.85;letter-spacing:-0.04em;text-shadow:0 4px 16px rgba(0,0,0,0.5);">1 in 3</div>
+      <h1 style="font-weight:900;font-size:48px;line-height:0.95;letter-spacing:-0.03em;color:${WH};text-transform:uppercase;text-shadow:0 3px 12px rgba(0,0,0,0.4);margin:12px 0 0;">
+        STUDENTS SAY CAMPUS<br>FEELS ISOLATING<br>AT NIGHT.
+      </h1>
+      <p style="font-weight:500;font-size:22px;color:rgba(255,255,255,0.85);margin-top:28px;text-shadow:0 2px 8px rgba(0,0,0,0.4);max-width:700px;line-height:1.4;">What if the walk home felt like a social moment instead?</p>
+      <div style="margin-top:32px;">${pillBtn('Book a Demo')}</div>
+    </div>
+    ${bottomBar()}
+  </div>`;
+}
+
+// ═══════════════════════════════════════
+// SECTION 3: PROACTIVE > REACTIVE (Creatives 10-12)
+// ═══════════════════════════════════════
+
+function creative10() {
+  return `<div data-export-name="safety-10-proactive-build" style="${imgBg('b2b-05-group-walking')}">
+    <div style="position:absolute;top:0;left:0;right:0;bottom:0;background:linear-gradient(180deg, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.7) 55%);z-index:1;"></div>
+    ${topBar()}
+    <div style="position:absolute;bottom:180px;left:0;right:0;padding:0 56px;z-index:5;">
+      <h1 style="font-weight:900;font-size:72px;line-height:0.95;letter-spacing:-0.03em;color:${WH};text-transform:uppercase;text-shadow:0 3px 12px rgba(0,0,0,0.4);margin:0;">
+        DON'T WAIT FOR<br>AN INCIDENT.<br><br><span style="color:${Y};">BUILD CONNECTION<br>NOW.</span>
+      </h1>
+      <p style="font-weight:500;font-size:22px;color:rgba(255,255,255,0.85);margin-top:28px;text-shadow:0 2px 8px rgba(0,0,0,0.4);max-width:700px;line-height:1.4;">sidexside deploys in weeks — not months.</p>
+      <div style="margin-top:32px;">${pillBtn('Book a Demo')}</div>
+    </div>
+    ${bottomBar()}
+  </div>`;
+}
+
+function creative11() {
+  return `<div data-export-name="safety-11-proactive-prevent" style="${imgBg('b2b-04-campus-buildings')}">
+    <div style="position:absolute;top:0;left:0;right:0;bottom:0;background:linear-gradient(200deg, rgba(0,0,0,0.15) 0%, rgba(0,0,0,0.75) 55%);z-index:1;"></div>
+    ${topBar()}
+    <div style="position:absolute;bottom:180px;left:0;right:0;padding:0 56px;z-index:5;">
+      <h1 style="font-weight:900;font-size:56px;line-height:0.95;letter-spacing:-0.03em;color:${WH};text-transform:uppercase;text-shadow:0 3px 12px rgba(0,0,0,0.4);margin:0;">
+        WHAT IF YOU COULD<br><span style="color:${Y};">PREVENT</span> THE<br>PROBLEM INSTEAD<br>OF RESPONDING<br>TO IT?
+      </h1>
+      <p style="font-weight:500;font-size:22px;color:rgba(255,255,255,0.85);margin-top:28px;text-shadow:0 2px 8px rgba(0,0,0,0.4);max-width:700px;line-height:1.4;">Peer connection is the most natural form of campus wellbeing. sidexside creates it automatically.</p>
+      <div style="margin-top:32px;">${pillBtn('Book a Demo')}</div>
+    </div>
+    ${bottomBar()}
+  </div>`;
+}
+
+function creative12() {
+  return `<div data-export-name="safety-12-demand-signal" style="${imgBg('01-walking-together')}">
+    <div style="position:absolute;top:0;left:0;right:0;bottom:0;background:linear-gradient(180deg, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.75) 55%);z-index:1;"></div>
+    ${topBar()}
+    <div style="position:absolute;bottom:180px;left:0;right:0;padding:0 56px;z-index:5;">
+      <div style="font-weight:900;font-size:160px;color:${Y};line-height:0.85;letter-spacing:-0.05em;text-shadow:0 4px 16px rgba(0,0,0,0.5);">73%</div>
+      <h1 style="font-weight:900;font-size:46px;line-height:0.95;letter-spacing:-0.03em;color:${WH};text-transform:uppercase;text-shadow:0 3px 12px rgba(0,0,0,0.4);margin:12px 0 0;">
+        OF WOMEN ON YOUR<br>CAMPUS WANT ONE<br>THING ON THE WALK<br>HOME. <span style="color:${Y};">COMPANY.</span>
+      </h1>
+      <p style="font-weight:500;font-size:22px;color:rgba(255,255,255,0.85);margin-top:28px;text-shadow:0 2px 8px rgba(0,0,0,0.4);max-width:700px;line-height:1.4;">Not a tracking app. Not a panic button. Just someone heading the same direction.</p>
+      <div style="margin-top:32px;">${pillBtn('Book a Demo')}</div>
+    </div>
+    ${bottomBar()}
+  </div>`;
+}
+
+// ═══════════════════════════════════════
+// SECTION 4: READY-TO-PASTE META ADS (Creatives 13-17, Square 1080x1080)
+// ═══════════════════════════════════════
+
+function meta13() {
+  return `<div data-export-name="safety-13-meta-the-gap" style="${imgBg('b2b-06-night-campus-lights', 1080, 1080)}">
+    <div style="position:absolute;top:0;left:0;right:0;bottom:0;background:linear-gradient(180deg, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.75) 60%);z-index:1;"></div>
+    ${topBar()}
+    <div style="position:absolute;bottom:140px;left:0;right:0;padding:0 56px;z-index:5;">
+      <h1 style="font-weight:900;font-size:56px;line-height:0.95;letter-spacing:-0.03em;color:${WH};text-transform:uppercase;text-shadow:0 3px 12px rgba(0,0,0,0.4);margin:0;">
+        PEER WALKING<br>COMPANIONS<br>FOR <span style="color:${Y};">CAMPUS</span>
+      </h1>
+      <p style="font-weight:500;font-size:20px;color:rgba(255,255,255,0.85);margin-top:20px;text-shadow:0 2px 8px rgba(0,0,0,0.4);max-width:600px;line-height:1.4;">Your escort runs until midnight. Your students don't stop. sidexside fills the gap.</p>
+      <div style="margin-top:28px;">${pillBtn('Book a Demo')}</div>
+    </div>
+    ${bottomBar()}
+  </div>`;
+}
+
+function meta14() {
+  return `<div data-export-name="safety-14-meta-the-stat" style="${imgBg('b2b-03-walking-together-side', 1080, 1080)}">
+    <div style="position:absolute;top:0;left:0;right:0;bottom:0;background:linear-gradient(175deg, rgba(0,0,0,0.05) 0%, rgba(0,0,0,0.72) 55%);z-index:1;"></div>
+    ${topBar()}
+    <div style="position:absolute;bottom:140px;left:0;right:0;padding:0 56px;z-index:5;">
+      <div style="font-weight:900;font-size:100px;color:${Y};line-height:0.85;letter-spacing:-0.04em;text-shadow:0 4px 16px rgba(0,0,0,0.5);">73%</div>
+      <h1 style="font-weight:900;font-size:44px;line-height:0.95;letter-spacing:-0.03em;color:${WH};text-transform:uppercase;text-shadow:0 3px 12px rgba(0,0,0,0.4);margin:12px 0 0;">
+        OF WOMEN WANT<br>A WALKING<br>COMPANION
+      </h1>
+      <p style="font-weight:500;font-size:20px;color:rgba(255,255,255,0.85);margin-top:20px;text-shadow:0 2px 8px rgba(0,0,0,0.4);max-width:600px;line-height:1.4;">Not a tracking app. Not a panic button. Just someone heading the same way.</p>
+      <div style="margin-top:28px;">${pillBtn('Book a Demo')}</div>
+    </div>
+    ${bottomBar()}
+  </div>`;
+}
+
+function meta15() {
+  return `<div data-export-name="safety-15-meta-after-dark" style="${imgBg('03-night-campus', 1080, 1080)}">
+    <div style="position:absolute;top:0;left:0;right:0;bottom:0;background:linear-gradient(180deg, rgba(0,0,0,0.25) 0%, rgba(0,0,0,0.8) 60%);z-index:1;"></div>
+    ${topBar()}
+    <div style="position:absolute;bottom:140px;left:0;right:0;padding:0 56px;z-index:5;">
+      <h1 style="font-weight:900;font-size:56px;line-height:0.95;letter-spacing:-0.03em;color:${WH};text-transform:uppercase;text-shadow:0 3px 12px rgba(0,0,0,0.4);margin:0;">
+        YOUR CAMPUS<br>AFTER DARK<br><span style="color:${Y};">NEEDS THIS</span>
+      </h1>
+      <p style="font-weight:500;font-size:20px;color:rgba(255,255,255,0.85);margin-top:20px;text-shadow:0 2px 8px rgba(0,0,0,0.4);max-width:600px;line-height:1.4;">The campus that feels connected at noon goes quiet at 10pm. sidexside matches women heading the same way.</p>
+      <div style="margin-top:28px;">${pillBtn('Book a Demo')}</div>
+    </div>
+    ${bottomBar()}
+  </div>`;
+}
+
+function meta16() {
+  return `<div data-export-name="safety-16-meta-blue-lights" style="${imgBg('b2b-02-campus-pathway', 1080, 1080)}">
+    <div style="position:absolute;top:0;left:0;right:0;bottom:0;background:linear-gradient(190deg, rgba(0,0,0,0.15) 0%, rgba(0,0,0,0.75) 60%);z-index:1;"></div>
+    ${topBar()}
+    <div style="position:absolute;bottom:140px;left:0;right:0;padding:0 56px;z-index:5;">
+      <h1 style="font-weight:900;font-size:52px;line-height:0.95;letter-spacing:-0.03em;color:${WH};text-transform:uppercase;text-shadow:0 3px 12px rgba(0,0,0,0.4);margin:0;">
+        BLUE LIGHTS ARE<br>STATIONARY.<br><span style="color:${Y};">YOUR STUDENTS<br>AREN'T.</span>
+      </h1>
+      <p style="font-weight:500;font-size:20px;color:rgba(255,255,255,0.85);margin-top:20px;text-shadow:0 2px 8px rgba(0,0,0,0.4);max-width:600px;line-height:1.4;">sidexside adds the mobile peer layer — matching women heading the same direction. Every pathway. Every hour.</p>
+      <div style="margin-top:28px;">${pillBtn('Book a Demo')}</div>
+    </div>
+    ${bottomBar()}
+  </div>`;
+}
+
+function meta17() {
+  return `<div data-export-name="safety-17-meta-the-reroute" style="${imgBg('b2b-09-entering-campus', 1080, 1080)}">
+    <div style="position:absolute;top:0;left:0;right:0;bottom:0;background:linear-gradient(180deg, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.72) 55%);z-index:1;"></div>
+    ${topBar()}
+    <div style="position:absolute;bottom:140px;left:0;right:0;padding:0 56px;z-index:5;">
+      <div style="font-weight:900;font-size:100px;color:${Y};line-height:0.85;letter-spacing:-0.04em;text-shadow:0 4px 16px rgba(0,0,0,0.5);">67%</div>
+      <h1 style="font-weight:900;font-size:44px;line-height:0.95;letter-spacing:-0.03em;color:${WH};text-transform:uppercase;text-shadow:0 3px 12px rgba(0,0,0,0.4);margin:12px 0 0;">
+        OF WOMEN REROUTE<br>TO AVOID WALKING<br>ALONE
+      </h1>
+      <p style="font-weight:500;font-size:20px;color:rgba(255,255,255,0.85);margin-top:20px;text-shadow:0 2px 8px rgba(0,0,0,0.4);max-width:600px;line-height:1.4;">What if they didn't have to? sidexside connects women heading the same direction.</p>
+      <div style="margin-top:28px;">${pillBtn('Book a Demo')}</div>
+    </div>
+    ${bottomBar()}
+  </div>`;
+}
+
+// ═══════════════════════════════════════
+// RENDER & EXPORT
+// ═══════════════════════════════════════
+
+function renderCard(html, title, w, h, container) {
+  const pw=Math.round(w*S), ph=Math.round(h*S);
+  const card=document.createElement('div');
+  card.className='card';
+  card.style.width=(pw+2)+'px';
+  card.innerHTML=`
+    <div class="card-preview" style="width:${pw}px;height:${ph}px;">
+      <div style="transform:scale(${S});transform-origin:top left;width:${w}px;height:${h}px;">${html}</div>
+    </div>
+    <div class="card-bar">
+      <span>${title}</span>
+      <button class="export-btn" onclick="exportSingle(this)">Export</button>
+    </div>`;
+  container.appendChild(card);
+}
+
+async function doExport(el) {
+  const name=el.getAttribute('data-export-name');
+  const cont=document.createElement('div');
+  cont.style.cssText='position:fixed;top:0;left:0;z-index:-9999;opacity:0;pointer-events:none;';
+  document.body.appendChild(cont);
+  const clone=el.cloneNode(true);
+  clone.style.transform='none';
+  cont.appendChild(clone);
+  await new Promise(r=>setTimeout(r,500));
+  try {
+    const w=parseInt(clone.style.width), h=parseInt(clone.style.height);
+    const canvas=await html2canvas(clone,{scale:2,useCORS:true,backgroundColor:null,width:w,height:h,windowWidth:w+100,windowHeight:h+100});
+    const link=document.createElement('a');
+    link.download=name+'.png';
+    link.href=canvas.toDataURL('image/png');
+    link.click();
+  } catch(e){console.error(e);}
+  document.body.removeChild(cont);
+}
+
+async function exportSingle(btn) {
+  const el=btn.closest('.card').querySelector('[data-export-name]');
+  if(!el) return;
+  btn.textContent='...';
+  await doExport(el);
+  btn.textContent='Export';
+}
+
+async function exportAll() {
+  const els=document.querySelectorAll('[data-export-name]');
+  const st=document.getElementById('status');
+  for(let i=0;i<els.length;i++){
+    st.textContent=`Exporting ${i+1}/${els.length}...`;
+    await doExport(els[i]);
+    await new Promise(r=>setTimeout(r,700));
+  }
+  st.textContent=`Done! ${els.length} PNGs exported.`;
+  setTimeout(()=>{st.textContent='';},4000);
+}
+
+window.addEventListener('DOMContentLoaded',()=>{
+  const gapG=document.getElementById('gap-grid');
+  const darkG=document.getElementById('dark-grid');
+  const proG=document.getElementById('proactive-grid');
+  const metaG=document.getElementById('meta-grid');
+
+  // Section 1: The Service Gap
+  renderCard(creative01(),'Escort Gap',1080,1350,gapG);
+  renderCard(creative02(),'Shuttle Gap',1080,1350,gapG);
+  renderCard(creative03(),'Blue Light Gap',1080,1350,gapG);
+  renderCard(creative04(),'Infrastructure Gap',1080,1350,gapG);
+
+  // Section 2: The After-Dark Problem
+  renderCard(creative05(),'Day vs Night',1080,1350,darkG);
+  renderCard(creative06(),'52% Disconnected',1080,1350,darkG);
+  renderCard(creative07(),'Solo Walks',1080,1350,darkG);
+  renderCard(creative08(),'67% Rerouting',1080,1350,darkG);
+  renderCard(creative09(),'1 in 3 Isolation',1080,1350,darkG);
+
+  // Section 3: Proactive > Reactive
+  renderCard(creative10(),'Build Connection Now',1080,1350,proG);
+  renderCard(creative11(),'Prevent Don\'t React',1080,1350,proG);
+  renderCard(creative12(),'73% Want Company',1080,1350,proG);
+
+  // Section 4: Ready-to-Paste Meta Ads (Square)
+  renderCard(meta13(),'Meta: The Gap',1080,1080,metaG);
+  renderCard(meta14(),'Meta: The Stat',1080,1080,metaG);
+  renderCard(meta15(),'Meta: After Dark',1080,1080,metaG);
+  renderCard(meta16(),'Meta: Blue Lights',1080,1080,metaG);
+  renderCard(meta17(),'Meta: The Reroute',1080,1080,metaG);
+});
+</script>
+</body>
+</html>
